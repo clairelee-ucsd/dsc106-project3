@@ -1,0 +1,110 @@
+html{
+    font-size: 16px;
+    padding: 20px;
+}
+
+/* Main container holding checkboxes and slider */
+#params {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px; /* Reduced gap for better alignment */
+    width: 100%;
+    padding: 10px;
+    position: relative;
+}
+
+/* Checkbox container */
+#testFilter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    min-width: 100px;
+}
+
+#graphRadioButtons{
+    display: flex;
+    /* flex-direction: ; */
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+/* Make sure the slider stretches fully */
+#slider {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    min-width: 100px;
+    width: 80%;
+    padding: 10px;
+    padding-right: 50px;
+}
+
+/* Force labels and slider to be in a single line */
+#slider label {
+    white-space: nowrap;
+    margin: 5px;
+    font-size: 20px;
+}
+
+/* Wrapper for the slider to allow text overlay */
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style for static text background */
+.slider-text {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.5); /* Semi-transparent text */
+    z-index: 2; /* Behind the slider */
+    pointer-events: none; /* Ensure it doesn't interfere with dragging */
+    top: 50%;
+    transform: translateY(-50%); /* ✅ Centers text vertically inside the slider */
+}
+
+/* Make the slider take up the full width */
+input[type="range"] {
+    position: relative;
+    flex-grow: 1;
+    width: 80%;
+    max-width: 800%; /* Ensures it fills the container */
+    min-width: 300px; /* Ensures it doesn't shrink too much */
+    height: 8px; /* Adjust thickness */
+    -webkit-appearance: none; /* Removes default styles for WebKit browsers */
+    appearance: none;
+    background: #007bff; /* Change color of the bar */
+    border-radius: 50px;
+    outline: none;
+    z-index: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    position: relative;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background: #0056b3;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 3;
+}
+
+#content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 50px;
+    padding: 10px;
+    width: 100%;
+}
+#graphRadioButtons{
+    padding-right: 60px;
+}

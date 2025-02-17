@@ -26,14 +26,25 @@
             <label for="sliderEnd">End</label>
         </div>
     </div>
-    
-    </div>
-    <div id="graphRadioButtons">
-        <h3>Select 1:</h3>
-        <label><input type="radio" name="measure" value="hr"> Heart Rate (bpm)</label>
-        <label><input type="radio" name="measure" value="bvp"> Blood Volume Pressure (µV)</label>
-        <label><input type="radio" name="measure" value="temp"> Skin Surface Temperature (°C)</label>
-        <label><input type="radio" name="measure" value="eda"> Electrodermal Activity (μS)</label>
+
+    <div id = content>
+        <div>
+            <h3>placeholder for body</h3>
+            <svg id="body" ></svg>
+        </div>
+
+        <div id="graph-container">
+            <div id="graphRadioButtons">
+                <h3>Select 1:</h3>
+                <label><input type="radio" name="measure" value="hr"> Heart Rate (bpm)</label>
+                <label><input type="radio" name="measure" value="bvp"> Blood Volume Pressure (µV)</label>
+                <label><input type="radio" name="measure" value="temp"> Skin Surface Temperature (°C)</label>
+                <label><input type="radio" name="measure" value="eda"> Electrodermal Activity (μS)</label>
+            </div>
+            <div id = "graphs">
+                <!-- graphs will be placed here -->
+            </div>
+        </div>
     </div>
 </body>
 </html>
