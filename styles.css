@@ -101,7 +101,6 @@ input[type="range"]::-webkit-slider-thumb {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 50px;
     padding: 10px;
     width: 100%;
 }
