@@ -9,5 +9,31 @@
 </head>
 <body>
     <h1>DSC106 Project 3</h1>
+    <br>
+    <h3>Choose from the Tests Below:</h3>
+    <div id="params">
+        <div id="testFilter">
+            <label><input type="checkbox" name="option1" value="Midterm 1"> Midterm 1</label>
+            <label><input type="checkbox" name="option2" value="Midterm 2"> Midterm 2</label>
+            <label><input type="checkbox" name="option3" value="Final"> Final</label>
+        </div>
+        <div id="slider">
+            <label for="sliderStart">Start</label>
+            <div class="slider-wrapper">
+                <span class="slider-text">Test Duration</span> <!-- Static background text -->
+                <input type="range" id="slider" min="0" max="100" value="50">
+            </div>
+            <label for="sliderEnd">End</label>
+        </div>
+    </div>
+    
+    </div>
+    <div id="graphRadioButtons">
+        <h3>Select 1:</h3>
+        <label><input type="radio" name="measure" value="hr"> Heart Rate (bpm)</label>
+        <label><input type="radio" name="measure" value="bvp"> Blood Volume Pressure (µV)</label>
+        <label><input type="radio" name="measure" value="temp"> Skin Surface Temperature (°C)</label>
+        <label><input type="radio" name="measure" value="eda"> Electrodermal Activity (μS)</label>
+    </div>
 </body>
 </html>
