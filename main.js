@@ -6,6 +6,8 @@ let yScale;
 let svg;
 let selectedCheckboxes = [];
 let selectedRadio = '';
+let stressData = [];
+let selectedExams = ["final"];
 
 async function loadData(filePath, measure, selectedCheckboxes) {
     // Load the CSV data
@@ -32,6 +34,30 @@ async function loadData(filePath, measure, selectedCheckboxes) {
         // Return the row with the selected properties
         return result;
     });
+}
+
+async function loadStressData() {
+    try {
+        const response = await d3.json("stress_data.json");
+        console.log("Stress data loaded:", response);
+
+        if (!response || response.length === 0) {
+            console.error("Stress data is empty!");
+            return;
+        }
+
+        stressData = response; // Assign globally
+
+        // Set slider range dynamically AFTER data is loaded
+        const slider = document.querySelector("#slider input[type='range']");
+        slider.min = 0;
+        slider.max = stressData.length - 1;
+        slider.value = 0; // Start from the beginning
+
+        updateVisualization(0); // Initialize visualization
+    } catch (error) {
+        console.error("Error loading stress data:", error);
+    }
 }
 
 function createScatterPlot(measure_name) {
@@ -286,6 +312,15 @@ document.querySelectorAll('#testFilter input[type="checkbox"]').forEach((checkbo
             loadData(filePath, selectedRadio.toUpperCase(), selectedCheckboxes)
                 .then(() => createScatterPlot(measure_name));
         }
+
+        selectedExams = Array.from(document.querySelectorAll('#testFilter input[type="checkbox"]:checked'))
+            .map(checkbox => checkbox.value.toLowerCase().replace(" ", "_"));
+
+        if (selectedExams.length === 0) {
+            selectedExams = ["final"]; // Default to final if none selected
+        }
+
+        updateVisualization(+document.querySelector("#slider input[type='range']").value);
     });
 });
 
@@ -320,18 +355,80 @@ document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
     });
 });
 
+function getAveragedStress(index) {
+    if (!stressData || stressData.length === 0) return 0;
+
+    index = Math.min(Math.max(index, 0), stressData.length - 1);
+    const selectedStressValues = selectedExams.map(exam => stressData[index][`${exam}_stress`]);
+
+    console.log(`Index: ${index}, Selected Exams: ${selectedExams}, Stress Values:`, selectedStressValues);
+
+    // If only one exam is selected, return its stress directly
+    if (selectedStressValues.length === 1) {
+        return selectedStressValues[0];
+    }
+
+    // Handle midterm-only selection
+    const isOnlyMidterms = selectedExams.includes("mt1") || selectedExams.includes("mt2");
+    if (isOnlyMidterms && !selectedExams.includes("final")) {
+        return selectedStressValues.reduce((a, b) => a + b, 0) / selectedStressValues.length;
+    }
+
+    // If final is selected alongside midterms, use the final exam stress **after** midterms end
+    if (selectedExams.includes("final")) {
+        let midtermEndIndex = Math.max(
+            stressData.findIndex(d => d[`mt1_stress`] === undefined),
+            stressData.findIndex(d => d[`mt2_stress`] === undefined)
+        );
+
+        if (index >= midtermEndIndex) {
+            return stressData[index]["final_stress"];
+        }
+    }
+
+    // Compute average stress for selected exams
+    return selectedStressValues.reduce((a, b) => a + b, 0) / selectedStressValues.length;
+}
+
+function updateVisualization(index) {
+    if (!stressData || stressData.length === 0) {
+        console.warn("Stress data is not available yet.");
+        return;
+    }
+
+    const stressLevel = getAveragedStress(index);
+    console.log(`Updating visualization: Index=${index}, Stress Level=${stressLevel}`);
+
+    const colorScale = d3.scaleLinear()
+        .domain([0, 1])
+        .range(["green", "red"]);
+
+    const overlay = document.querySelector(".overlay");
+    if (overlay) {
+        overlay.style.backgroundColor = colorScale(stressLevel);
+    } else {
+        console.error("Overlay element not found!");
+    }
+}
+
+// Event listeners
 document.addEventListener("DOMContentLoaded", () => {
     const slider = document.querySelector("#slider input[type='range']");
-    const overlay = document.querySelector(".overlay");
 
-    // Define a color scale from blue (calm) to red (stressed)
-    const colorScale = d3.scaleLinear()
-        .domain([0, 100])
-        .range(["blue", "red"]);
-
-    slider.addEventListener("input", () => {
-        const stressLevel = +slider.value;
-        const newColor = colorScale(stressLevel);
-        overlay.style.backgroundColor = newColor;
+    slider.addEventListener("input", (event) => {
+        const index = +event.target.value;
+        updateVisualization(index);
     });
+
+    document.querySelectorAll('#testFilter input[type="checkbox"]').forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            selectedExams = Array.from(document.querySelectorAll('#testFilter input[type="checkbox"]:checked'))
+                .map(cb => cb.value.toLowerCase().replace(" ", "_"));
+
+            if (selectedExams.length === 0) selectedExams = ["final"];
+            updateVisualization(+document.querySelector("#slider input[type='range']").value);
+        });
+    });
+
+    loadStressData();
 });
