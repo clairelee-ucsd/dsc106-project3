@@ -24,10 +24,11 @@ html{
 }
 
 #graphRadioButtons{
-    display: grid;
-    grid-row: 2 2;
-    gap: 2px;
-    padding: 0px;
+    display: flex;
+    /* flex-direction: ; */
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
 }
 /* Make sure the slider stretches fully */
 #slider {
@@ -35,9 +36,9 @@ html{
     align-items: center;
     flex-grow: 1;
     min-width: 100px;
-    width: 80%;
+    width: 100%;
     padding: 10px;
-    padding-right: 50px;
+    /* padding-right: 50px; */
 }
 
 /* Force labels and slider to be in a single line */
@@ -54,6 +55,7 @@ html{
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 /* Style for static text background */
@@ -65,15 +67,16 @@ html{
     z-index: 2; /* Behind the slider */
     pointer-events: none; /* Ensure it doesn't interfere with dragging */
     top: 50%;
-    transform: translateY(-50%); /* ✅ Centers text vertically inside the slider */
+    left: 50%;
+    transform: translate(-50%, -50%); /* ✅ Centers text vertically inside the slider */
 }
 
 /* Make the slider take up the full width */
 input[type="range"] {
     position: relative;
     flex-grow: 1;
-    width: 80%;
-    max-width: 800%; /* Ensures it fills the container */
+    width: 100%;
+    /* max-width: 800%; Ensures it fills the container */
     min-width: 300px; /* Ensures it doesn't shrink too much */
     height: 8px; /* Adjust thickness */
     -webkit-appearance: none; /* Removes default styles for WebKit browsers */
@@ -81,19 +84,18 @@ input[type="range"] {
     background: #007bff; /* Change color of the bar */
     border-radius: 50px;
     outline: none;
-    z-index: 1;
 }
 
 input[type="range"]::-webkit-slider-thumb {
     position: relative;
     -webkit-appearance: none;
     appearance: none;
+    flex-grow: 1;
     width: 30px;
     height: 30px;
     background: #0056b3;
     border-radius: 50%;
     cursor: pointer;
-    z-index: 3;
 }
 
 #content{
