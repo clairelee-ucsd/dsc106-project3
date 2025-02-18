@@ -321,7 +321,7 @@ document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const slider = document.getElementById("slider");
+    const slider = document.querySelector("#slider input[type='range']");
     const overlay = document.querySelector(".overlay");
 
     // Define a color scale from blue (calm) to red (stressed)
