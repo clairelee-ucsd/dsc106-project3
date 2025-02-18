@@ -1,3 +1,5 @@
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
 let data = [];
 let xScale;
 let yScale;
@@ -318,3 +320,18 @@ document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.getElementById("slider");
+    const overlay = document.querySelector(".overlay");
+
+    // Define a color scale from blue (calm) to red (stressed)
+    const colorScale = d3.scaleLinear()
+        .domain([0, 100])
+        .range(["blue", "red"]);
+
+    slider.addEventListener("input", () => {
+        const stressLevel = +slider.value;
+        const newColor = colorScale(stressLevel);
+        overlay.style.backgroundColor = newColor;
+    });
+});

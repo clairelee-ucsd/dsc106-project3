@@ -170,3 +170,43 @@ dl.info dd {
     top: 1em;
     left: 1em;
   }
+
+  .container {
+    position: relative;
+    width: 175px;
+    height: 396px;
+}
+
+.silhouette {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    background-size: contain;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+    opacity: 0.9;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+
+    /* Mask the overlay so it only appears on the non-transparent part of the PNG */
+    -webkit-mask-image: url('silhouette.png');
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+
+    mask-image: url('silhouette.png');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+}
+
+input[type="range"] {
+    width: 300px;
+    margin-top: 20px;
+}
