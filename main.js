@@ -401,7 +401,7 @@ function updateVisualization(index) {
 
     const colorScale = d3.scaleLinear()
         .domain([0, 1])
-        .range(["green", "red"]);
+        .range(["blue", "red"]);
 
     const overlay = document.querySelector(".overlay");
     if (overlay) {
