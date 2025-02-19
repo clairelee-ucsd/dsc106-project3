@@ -277,7 +277,7 @@ function createScatterPlot(measure_name) {
                 })
                 .on("mouseleave", function (event) {
                     d3.select(event.currentTarget).style("fill-opacity", 0.8);
-                    updateTooltipContent({});
+                    // updateTooltipContent({});
                     updateTooltipVisibility(false);
                 });
         }
