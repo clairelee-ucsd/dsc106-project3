@@ -79,6 +79,7 @@ function createEmptyScatterPlot() {
     xScale = d3.scaleLinear()
         .domain([0, 1])
         .range([margin.left, width - margin.right]);
+        
     yScale = d3.scaleLinear()
         .domain([0, 1])
         .range([height - margin.bottom, margin.top]);
@@ -87,8 +88,17 @@ function createEmptyScatterPlot() {
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale);
 
-    svg.append("g").attr("transform", `translate(0, ${height - margin.bottom})`).call(xAxis).selectAll("text").style("font-size", "18px");
-    svg.append("g").attr("transform", `translate(${margin.left}, 0)`).call(yAxis).selectAll("text").style("font-size", "18px");
+    svg.append("g")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(xAxis)
+        .selectAll("text")
+        .style("font-size", "18px");
+
+    svg.append("g")
+        .attr("transform", `translate(${margin.left}, 0)`)
+        .call(yAxis)
+        .selectAll("text")
+        .style("font-size", "18px");
 
     // Add Placeholder Titles
     svg.append("text")
@@ -365,6 +375,11 @@ document
             selectedRadio = document.querySelector(
                 'input[name="measure"]:checked'
             )?.value;
+
+            if (selectedCheckboxes.length === 0) {
+                createEmptyScatterPlot();
+                return;
+            }
 
             // Re-load and update the graph whenever a checkbox or radio button is selected
             if (selectedRadio) {
