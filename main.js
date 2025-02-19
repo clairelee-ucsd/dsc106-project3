@@ -61,8 +61,8 @@ async function loadStressData() {
 }
 
 function createEmptyScatterPlot() {
-    const width = 1000;
-    const height = 600;
+    const width = 1800;
+    const height = 800;
     const margin = { top: 10, right: 10, bottom: 30, left: 20 };
 
     // Remove any existing SVG
@@ -104,8 +104,8 @@ function createEmptyScatterPlot() {
 }
 
 function createScatterPlot(measure_name) {
-    const width = 1000;
-    const height = 600;
+    const width = 1800;
+    const height = 800;
     const margin = { top: 10, right: 10, bottom: 30, left: 20 };
 
     const maxAvgMeasure = Math.max(
