@@ -7,7 +7,7 @@ let svg;
 let selectedCheckboxes = [];
 let selectedRadio = "";
 let stressData = [];
-let selectedExams = ["final"];
+let selectedExams = [];
 
 async function loadData(filePath, measure, selectedCheckboxes) {
     // Load the CSV data
@@ -340,7 +340,7 @@ document
             ).map((checkbox) => checkbox.value.toLowerCase().replace(" ", "_"));
 
             if (selectedExams.length === 0) {
-                selectedExams = ["final"]; // Default to final if none selected
+                selectedExams = [];
             }
 
             updateVisualization(
@@ -441,7 +441,7 @@ function updateVisualization(index) {
         `Updating visualization: Index=${index}, Stress Level=${stressLevel}`
     );
 
-    const colorScale = d3.scaleLinear().domain([0, 1]).range(["blue", "red"]);
+    const colorScale = d3.scaleLinear().domain([0.2, 0.8]).range(["blue", "red"]);
 
     const overlay = document.querySelector(".overlay");
     if (overlay) {
@@ -470,7 +470,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
                 ).map((cb) => cb.value.toLowerCase().replace(" ", "_"));
 
-                if (selectedExams.length === 0) selectedExams = ["final"];
+                if (selectedExams.length === 0) selectedExams = [];
                 updateVisualization(
                     +document.querySelector("#slider input[type='range']").value
                 );
