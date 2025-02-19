@@ -165,7 +165,8 @@ function createScatterPlot(measure_name) {
         height: height - margin.top - margin.bottom,
     };
 
-    const xAxis = d3.axisBottom(xScale);
+    const xAxis = d3.axisBottom(xScale)
+        .tickFormat(d => (d * 100) + '%');
     const yAxis = d3.axisLeft(yScale);
 
     // Update scales with new ranges
@@ -298,7 +299,7 @@ function updateTooltipContent(event, data) {
     if (!data || Object.keys(data).length === 0) return;
 
     // Display test progress
-    progress.textContent = `${data.test_progress.toFixed(2)}`;
+    progress.textContent = `${(data.test_progress * 100).toFixed(0)}%`;
 
     if (event.srcElement.className.baseVal === "midterm1_measure") {
         measurement_txt.textContent = `${"Midterm 1"}`;
