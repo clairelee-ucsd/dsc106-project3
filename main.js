@@ -83,23 +83,23 @@ function createEmptyScatterPlot() {
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale);
 
-    svg.append("g").attr("transform", `translate(0, ${height - margin.bottom})`).call(xAxis);
-    svg.append("g").attr("transform", `translate(${margin.left}, 0)`).call(yAxis);
+    svg.append("g").attr("transform", `translate(0, ${height - margin.bottom})`).call(xAxis).selectAll("text").style("font-size", "18px");
+    svg.append("g").attr("transform", `translate(${margin.left}, 0)`).call(yAxis).selectAll("text").style("font-size", "18px");
 
     // Add Placeholder Titles
     svg.append("text")
         .attr("x", width / 2)
-        .attr("y", height + 20)
+        .attr("y", height + 30)
         .style("text-anchor", "middle")
-        .style("font-size", "16px")
+        .style("font-size", "25px")
         .text("Test Progress (Select an Exam and Measure)");
 
     svg.append("text")
         .attr("x", -height / 2)
-        .attr("y", -10)
+        .attr("y", -45)
         .attr("transform", "rotate(-90)")
         .style("text-anchor", "middle")
-        .style("font-size", "16px")
+        .style("font-size", "25px")
         .text("Measure (Select an Exam and Measure)");
 }
 
@@ -176,42 +176,60 @@ function createScatterPlot(measure_name) {
     svg
         .append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
-        .call(xAxis);
+        .call(xAxis)
+        .selectAll("text")
+        .style("font-size", "18px");
 
     // Add X-axis title
     svg
         .append("text")
         .attr("class", "x-axis-title")
         .attr("x", width / 2)
-        .attr("y", height + 20) // Position the title just below the X-axis
+        .attr("y", height + 30) // Position the title just below the X-axis
         .style("text-anchor", "middle")
-        .style("font-size", "16px")
+        .style("font-size", "25px")
         .text("Test Progress");
 
     // Add Y axis
-    svg.append("g").attr("transform", `translate(${margin.left}, 0)`).call(yAxis);
+    svg
+        .append("g")
+        .attr("transform", `translate(${margin.left}, 0)`)
+        .call(yAxis)
+        .selectAll("text")
+        .style("font-size", "18px");
 
     // Add Y-axis title
     svg
         .append("text")
         .attr("class", "y-axis-title")
         .attr("x", -height / 2) // Position the title to the left of the Y-axis
-        .attr("y", -10) // Position the title higher along the Y-axis
+        .attr("y", -45) // Position the title higher along the Y-axis
         .attr("transform", "rotate(-90)") // Rotate the text to make it vertical
         .style("text-anchor", "middle")
-        .style("font-size", "16px")
+        .style("font-size", "25px")
         .text(measure_name);
 
+    // Add gridlines
     svg
         .append("g")
         .attr("class", "gridlines")
         .attr("transform", `translate(${margin.left}, 0)`)
         .call(d3.axisLeft(yScale).tickSize(-usableArea.width).tickFormat(""));
 
+    // svg
+    //     .append("g")
+    //     .attr("class", "gridlines")
+    //     .attr("transform", `translate(0, ${height - margin.bottom})`) // Position gridlines at the bottom
+    //     .call(
+    //         d3
+    //             .axisBottom(xScale) // X-axis gridlines
+    //             .tickSize(-usableArea.height) // Extend gridlines vertically
+    //             .tickFormat("")
+    //     );
     svg
         .append("g")
         .attr("class", "gridlines")
-        .attr("transform", `translate(0, ${height - margin.bottom})`) // Position gridlines at the bottom
+        .attr("transform", `translate(${margin.left}, ${height - margin.bottom})`) // Align with x-axis
         .call(
             d3
                 .axisBottom(xScale) // X-axis gridlines
