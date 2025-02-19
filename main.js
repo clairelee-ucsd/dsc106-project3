@@ -170,7 +170,8 @@ function createScatterPlot(measure_name) {
     .range(["steelblue", "orange", "green"]);
 
   const dotsGroup = svg.append("g").attr("class", "dots");
-
+  let y = 400;
+  let numLeg = 0;
   // Loop through each selected checkbox/test and draw its series
   selectedCheckboxes.forEach((test) => {
     // Determine the property name in data for this test
@@ -215,6 +216,41 @@ function createScatterPlot(measure_name) {
           updateTooltipContent({});
           updateTooltipVisibility(false);
         });
+
+      if (numLeg === 0) {
+        svg
+          .append("text")
+          .attr("x", 700)
+          .attr("y", y - 30)
+          .text("Legend")
+          .style("font-size", "25px")
+          .attr("alignment-baseline", "middle");
+      }
+      svg
+        .append("rect")
+        .attr("x", 690)
+        .attr("y", y - 10) // Adjust y position to center the rectangle
+        .attr("width", 200)
+        .attr("height", 20)
+        .attr("fill", "white")
+        .attr("stroke", "gray");
+
+      svg
+        .append("circle")
+        .attr("cx", 700)
+        .attr("cy", y)
+        .attr("r", 6)
+        .style("fill", colorScale(test));
+      svg
+        .append("text")
+        .attr("x", 720)
+        .attr("y", y)
+        .text(measureKey)
+        .style("font-size", "15px")
+        .attr("alignment-baseline", "middle");
+
+      y += 20;
+      numLeg += 1;
     }
   });
 }
