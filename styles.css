@@ -163,36 +163,26 @@ dl.info dd {
     color: #333;
 }
 
-.tooltip-left {
-    position: relative;
-    margin-top: 5em;
-    left: 1em;
-    width: 100px;
+.tooltip-left, .tooltip-right {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    justify-content: center;
+    align-items: center;
+    padding-top: 6em;
+    width: 200px;
     height: 300px;
-    .tt-top-left {
-        position: relative;
-        /* top: 1em; */
-        width: 100px;
-        height: 100px;
-        border-color:#333;
-        border-width: 2px;
-    }
-    .tt-bottom-left {
-        position: relative;
-        /* top: 1em; */
-        width: 100px;
-        height: 100px;
-        fill:#666;
-    }
-  }
+    gap: 3em;
+}
 
-  .tooltip-right {
+.tt-top-left, .tt-bottom-left, .tt-top-right, .tt-bottom-right {
+    margin: 0; /* Remove margin to center properly */
     position: relative;
-    top: 1em;
-    left: 1em;
-    width: 100px;
-    height: 300px;
-  }
+    width: 150px;
+    height: 100px;
+    border: 2px solid #333; 
+    border-radius: 10%;
+    background-color: #f1f1f17d;
+}
 
 .body-container {
     position: relative;
@@ -229,14 +219,9 @@ dl.info dd {
     mask-size: contain;
 }
 
-input[type="range"] {
-    width: 300px;
-    margin-top: 20px;
-}
-
 #graph-container {
     position: relative;
     left: 1em;
-    width: 400px;
+    width: 600px;
     height: 600px;
 }
