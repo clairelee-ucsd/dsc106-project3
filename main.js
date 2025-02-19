@@ -216,16 +216,6 @@ function createScatterPlot(measure_name) {
         .attr("transform", `translate(${margin.left}, 0)`)
         .call(d3.axisLeft(yScale).tickSize(-usableArea.width).tickFormat(""));
 
-    // svg
-    //     .append("g")
-    //     .attr("class", "gridlines")
-    //     .attr("transform", `translate(0, ${height - margin.bottom})`) // Position gridlines at the bottom
-    //     .call(
-    //         d3
-    //             .axisBottom(xScale) // X-axis gridlines
-    //             .tickSize(-usableArea.height) // Extend gridlines vertically
-    //             .tickFormat("")
-    //     );
     svg
         .append("g")
         .attr("class", "gridlines")
