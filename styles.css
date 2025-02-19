@@ -190,11 +190,10 @@ dl.info dd {
     left: 1em;
 }
 
-.tooltip-left,
-.tooltip-right {
+.stress-stats-left,
+.stress-stats-right {
     display: flex;
     flex-direction: column;
-    /* Align items vertically */
     justify-content: center;
     align-items: center;
     padding-top: 5em;
@@ -203,12 +202,11 @@ dl.info dd {
     gap: 5em;
 }
 
-.tt-top-left,
-.tt-bottom-left,
-.tt-top-right,
-.tt-bottom-right {
+.stats-top-left,
+.stats-bottom-left,
+.stats-top-right,
+.stats-bottom-right {
     margin: 0;
-    /* Remove margin to center properly */
     position: relative;
     width: 250px;
     height: 150px;
