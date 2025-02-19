@@ -76,8 +76,12 @@ function createEmptyScatterPlot() {
         .style("overflow", "visible");
 
     // Define scales with default ranges
-    xScale = d3.scaleLinear().domain([0, 1]).range([margin.left, width - margin.right]);
-    yScale = d3.scaleLinear().domain([0, 1]).range([height - margin.bottom, margin.top]);
+    xScale = d3.scaleLinear()
+        .domain([0, 1])
+        .range([margin.left, width - margin.right]);
+    yScale = d3.scaleLinear()
+        .domain([0, 1])
+        .range([height - margin.bottom, margin.top]);
 
     // Create Axes
     const xAxis = d3.axisBottom(xScale);
@@ -146,16 +150,6 @@ function createScatterPlot(measure_name) {
         .attr("viewBox", `0 0 ${width} ${height}`)
         .style("overflow", "visible");
 
-    xScale = d3
-        .scaleLinear()
-        .domain(d3.extent(data, (d) => d.test_progress))
-        .range([0, 1]);
-
-    yScale = d3
-        .scaleLinear()
-        .domain([Math.min(0, minAvgMeasure), maxAvgMeasure])
-        .range([height - margin.bottom, margin.top]);
-
     const usableArea = {
         top: margin.top,
         right: width - margin.right,
@@ -165,13 +159,24 @@ function createScatterPlot(measure_name) {
         height: height - margin.top - margin.bottom,
     };
 
+    xScale = d3.scaleLinear()
+        .domain([0, 1])
+        .range([usableArea.left, usableArea.right]);
+
+    yScale = d3
+        .scaleLinear()
+        .domain([Math.min(0, minAvgMeasure), maxAvgMeasure])
+        .range([usableArea.bottom, usableArea.top]);
+
     const xAxis = d3.axisBottom(xScale)
-        .tickFormat(d => (d * 100) + '%');
+        .tickValues(d3.range(0, 1.1, 0.1))
+        .tickFormat(d => (d * 100).toFixed(0) + '%');
+        
     const yAxis = d3.axisLeft(yScale);
 
     // Update scales with new ranges
-    xScale.range([usableArea.left, usableArea.right]);
-    yScale.range([usableArea.bottom, usableArea.top]);
+    // xScale.range([usableArea.left, usableArea.right]);
+    // yScale.range([usableArea.bottom, usableArea.top]);
 
     // Add X axis
     svg
@@ -220,7 +225,7 @@ function createScatterPlot(measure_name) {
     svg
         .append("g")
         .attr("class", "gridlines")
-        .attr("transform", `translate(${margin.left}, ${height - margin.bottom})`) // Align with x-axis
+        .attr("transform", `translate(0, ${height - margin.bottom})`)  // Align with x-axis
         .call(
             d3
                 .axisBottom(xScale) // X-axis gridlines
