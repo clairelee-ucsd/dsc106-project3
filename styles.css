@@ -25,11 +25,11 @@ html {
 }
 
 #graphRadioButtons {
-    display: flex;
-    /* flex-direction: ; */
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates 2 columns */
+    gap: 5px; /* Space between items */
+    max-width: 600px; /* Optional: Prevents stretching */
+    margin-bottom: 6px;
 }
 
 /* Make sure the slider stretches fully */
@@ -206,6 +206,11 @@ dl.info dd {
     background-color: #f1f1f17d;
 }
 
+.body h3 {
+    text-align: center;
+    width: 100%;
+}
+
 .body-container {
     position: relative;
     width: 175px;
@@ -246,4 +251,5 @@ dl.info dd {
     left: 1em;
     width: 600px;
     height: 600px;
+    margin-right: 2em;
 }
