@@ -60,6 +60,49 @@ async function loadStressData() {
     }
 }
 
+function createEmptyScatterPlot() {
+    const width = 1000;
+    const height = 600;
+    const margin = { top: 10, right: 10, bottom: 30, left: 20 };
+
+    // Remove any existing SVG
+    d3.select("#chart").select("svg").remove();
+
+    // Create the empty SVG
+    svg = d3
+        .select("#chart")
+        .append("svg")
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .style("overflow", "visible");
+
+    // Define scales with default ranges
+    xScale = d3.scaleLinear().domain([0, 1]).range([margin.left, width - margin.right]);
+    yScale = d3.scaleLinear().domain([0, 1]).range([height - margin.bottom, margin.top]);
+
+    // Create Axes
+    const xAxis = d3.axisBottom(xScale);
+    const yAxis = d3.axisLeft(yScale);
+
+    svg.append("g").attr("transform", `translate(0, ${height - margin.bottom})`).call(xAxis);
+    svg.append("g").attr("transform", `translate(${margin.left}, 0)`).call(yAxis);
+
+    // Add Placeholder Titles
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + 20)
+        .style("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Test Progress (Select an Exam and Measure)");
+
+    svg.append("text")
+        .attr("x", -height / 2)
+        .attr("y", -10)
+        .attr("transform", "rotate(-90)")
+        .style("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Measure (Select an Exam and Measure)");
+}
+
 function createScatterPlot(measure_name) {
     const width = 1000;
     const height = 600;
@@ -352,12 +395,8 @@ document
 // Event listener for radio buttons
 document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
     radioButton.addEventListener("change", () => {
-        // Update selected radio button
-        selectedRadio = document.querySelector(
-            'input[name="measure"]:checked'
-        )?.value;
+        selectedRadio = document.querySelector('input[name="measure"]:checked')?.value;
 
-        // Re-load and update the graph whenever a radio button is selected
         if (selectedRadio && selectedCheckboxes.length > 0) {
             let filePath;
             let measure_name;
@@ -375,10 +414,10 @@ document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
                 measure_name = "Average Electrodermal Activity (μS)";
             }
 
-            // Load the data and update the plot
-            loadData(filePath, selectedRadio.toUpperCase(), selectedCheckboxes).then(
-                () => createScatterPlot(measure_name)
-            );
+            loadData(filePath, selectedRadio.toUpperCase(), selectedCheckboxes)
+                .then(() => createScatterPlot(measure_name));
+        } else {
+            createEmptyScatterPlot(); // Reset to empty plot if nothing is selected
         }
     });
 });
@@ -453,29 +492,28 @@ function updateVisualization(index) {
 
 // Event listeners
 document.addEventListener("DOMContentLoaded", () => {
-    const slider = document.querySelector("#slider input[type='range']");
+    createEmptyScatterPlot(); // Show the empty plot initially
 
+    const slider = document.querySelector("#slider input[type='range']");
     slider.addEventListener("input", (event) => {
         const index = +event.target.value;
         updateVisualization(index);
     });
 
-    document
-        .querySelectorAll('#testFilter input[type="checkbox"]')
-        .forEach((checkbox) => {
-            checkbox.addEventListener("change", () => {
-                selectedExams = Array.from(
-                    document.querySelectorAll(
-                        '#testFilter input[type="checkbox"]:checked'
-                    )
-                ).map((cb) => cb.value.toLowerCase().replace(" ", "_"));
+    document.querySelectorAll('#testFilter input[type="checkbox"]').forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            selectedExams = Array.from(
+                document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
+            ).map((cb) => cb.value.toLowerCase().replace(" ", "_"));
 
-                if (selectedExams.length === 0) selectedExams = [];
-                updateVisualization(
-                    +document.querySelector("#slider input[type='range']").value
-                );
-            });
+            if (selectedExams.length === 0) {
+                selectedExams = [];
+                createEmptyScatterPlot(); // Reset to empty plot if no selection
+            } else {
+                updateVisualization(+document.querySelector("#slider input[type='range']").value);
+            }
         });
+    });
 
     loadStressData();
 });
