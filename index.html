@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <h1>DSC106 Project 3</h1>
     <br>
@@ -27,7 +29,7 @@
         </div>
     </div>
 
-    <div id = content>
+    <div id=content>
         <div class="tooltip-left">
             <div class="tt-top-left">
 
@@ -48,7 +50,7 @@
 
             </div>
             <div class="tt-bottom-right">
-                
+
             </div>
         </div>
 
@@ -61,20 +63,24 @@
                 <label><input type="radio" name="measure" value="temp"> Skin Surface Temperature (°C)</label>
                 <label><input type="radio" name="measure" value="eda"> Electrodermal Activity (μS)</label>
             </div>
-            <div id = "graphs">
+            <div id="graphs">
                 <!-- graphs will be placed here -->
             </div>
 
             <div id="chart"></div>
-            
-            <div id="tooltip" class="info tooltip" hidden>
-                <div id="test_progress"></div>
-                <div id="measurement_value"></div>
-            </div>
+
+            <dl id="tooltip" class="info tooltip" hidden>
+                <dt>Test Progress</dt>
+                <dd id="test_progress"></dd>
+
+                <dt id="measurement_name"></dt>
+                <dd id="measurement_value"></dd>
+            </dl>
         </div>
     </div>
 
     <script src="main.js" type="module"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </body>
+
 </html>

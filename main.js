@@ -210,45 +210,55 @@ function createScatterPlot(measure_name) {
                 })
                 .on('mouseleave', function (event) {
                     d3.select(event.currentTarget).style('fill-opacity', 0.8);
-                    updateTooltipContent(null);
+                    updateTooltipContent({});
                     updateTooltipVisibility(false);
                 });
         }
     });
-
 }
 
 
 function updateTooltipVisibility(isVisible) {
-    const tooltip = document.getElementById('test-tooltip');
+    const tooltip = document.getElementById('tooltip');
     tooltip.hidden = !isVisible;
 }
 
 function updateTooltipContent(data) {
     const progress = document.getElementById('test_progress');
+    const measurement_txt = document.getElementById('measurement_name');
     const measurement = document.getElementById('measurement_value');
+    measurement.textContent = '';
 
-    if (data == null) return;
+    if (Object.keys(data).length === 0) return;
 
-    progress.textContent = `Progress: ${data.test_progress.toFixed(2)}`;  // Display test progress
+    // Display test progress
+    progress.textContent = `${data.test_progress.toFixed(2)}`;  
+
+    // if (measureKey === 'midterm1_measure') {
+    //     measurement_txt.textContent =`${'Midterm 1'}` ;
+    //     measurement.textContent = `${data.midterm1_measure.toFixed(2)}`;
+    // } else if (measureKey === 'midterm2_measure') {
+    //     measurement_txt.textContent =`${'Midterm 2'}` ;
+    //     measurement.textContent = `${data.midterm2_measure.toFixed(2)}`;
+    // } else if (measureKey === 'final_measure') {
+    //     measurement_txt.textContent =`${'Final'}` ;
+    //     measurement.textContent = `${data.final_measure.toFixed(2)}`;
+    // }
     
-    let measureValue;
-    let label;
-    if (measureKey === 'midterm1_measure') {
-        measureValue = data.midterm1_measure;
-        label = 'Midterm 1';
-    } else if (measureKey === 'midterm2_measure') {
-        measureValue = data.midterm2_measure;
-        label = 'Midterm 2';
-    } else if (measureKey === 'final_measure') {
-        measureValue = data.final_measure;
-        label = 'Final';
+    if (selectedCheckboxes.includes('Midterm 1') && data.midterm1_measure) {
+        measurement_txt.textContent =`${'Midterm 1'}` ;
+        measurement.textContent = `${data.midterm1_measure.toFixed(2)}`;
+    } else if (selectedCheckboxes.includes('Midterm 2') && data.midterm2_measure) {
+        measurement_txt.textContent =`${'Midterm 2'}` ;
+        measurement.textContent = `${data.midterm2_measure.toFixed(2)}`;
+    } else if (selectedCheckboxes.includes('Final') && data.final_measure) {
+        measurement_txt.textContent =`${'Final'}` ;
+        measurement.textContent = `${data.final_measure.toFixed(2)}`;
     }
-    measurement.textContent = `${label}: ${measureValue.toFixed(2)}`;
 }
 
 function updateTooltipPosition(event) {
-    const tooltip = document.getElementById('test-tooltip');
+    const tooltip = document.getElementById('tooltip');
     const offsetX = 10;  // Offset
     const offsetY = 10;
 
