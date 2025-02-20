@@ -23,6 +23,14 @@ html {
     z-index: 3;
 }
 
+#filter-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    width: 100%;
+}
 /* Checkbox container */
 #testFilter {
     display: flex;
@@ -34,10 +42,9 @@ html {
 
 #graphRadioButtons {
     display: flex;
-    flex-direction: row;
-    gap: 20px;
-    max-width: 1000px; /* Optional: Prevents stretching */
-    margin-bottom: 2em;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
 }
 
 /* Make sure the slider stretches fully */
@@ -128,6 +135,15 @@ input[type="range"]::-webkit-slider-thumb {
     padding: 10px;
     width: 100%;
     gap: 5em;
+    margin-bottom: 1em;
+}
+#body-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
+    gap: 2em;
     margin-bottom: 1em;
 }
 
