@@ -382,7 +382,7 @@ function createScatterPlot(measure_name) {
   // Event listener for the slider to update the vertical line position
   const slider = document.querySelector("#slider input[type='range']");
   slider.addEventListener("input", (event) => {
-    const value = event.target.value / 89;
+    const value = event.target.value / 90 + 0.01
     const xPosition = xScale(value);
     verticalLine.attr("x1", xPosition).attr("x2", xPosition);
   });
