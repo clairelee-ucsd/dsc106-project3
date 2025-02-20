@@ -280,7 +280,7 @@ function createScatterPlot(measure_name) {
     .range(["steelblue", "orange", "green"]);
 
   const dotsGroup = svg.append("g").attr("class", "dots");
-  let y = 700;
+  let y = 855;
   let numLeg = 0;
 
   // Add a vertical line
@@ -342,38 +342,38 @@ function createScatterPlot(measure_name) {
       if (numLeg === 0) {
         svg
           .append("text")
-          .attr("x", 1500)
-          .attr("y", y - 30)
+          .attr("x", 1520)
+          .attr("y", y - 40)
           .text("Legend")
-          .style("font-size", "25px")
+          .style("font-size", "30px")
           .attr("alignment-baseline", "middle");
       }
       svg
         .append("rect")
-        .attr("x", 1490)
-        .attr("y", y - 10) // Adjust y position to center the rectangle
-        .attr("width", 200)
-        .attr("height", 20)
+        .attr("x", 1520)
+        .attr("y", y - 20) // Adjust y position to center the rectangle
+        .attr("width", 250)
+        .attr("height", 35)
         .attr("fill", "white")
         .attr("stroke", "gray");
 
       svg
         .append("circle")
-        .attr("cx", 1500)
+        .attr("cx", 1540)
         .attr("cy", y)
-        .attr("r", 6)
+        .attr("r", 8)
         .style("fill", colorScale(test));
 
       svg
         .append("text")
-        .attr("x", 1520)
+        .attr("x", 1550)
         .attr("y", y)
         .text(measureKey)
-        .style("font-size", "15px")
+        .style("font-size", "25px")
         .attr("alignment-baseline", "middle");
 
 
-      y += 20;
+      y += 36;
       numLeg += 1;
       updateTitle(selectedCheckboxes, selectedRadio);
     }
