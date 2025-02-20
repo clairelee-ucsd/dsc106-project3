@@ -588,22 +588,34 @@ function getAveragedStress(index) {
         selectedStressValues.length
     );
 }
-function getMeasureValue(data, index, metric) {
-    const row = data[index];
-    if (!row) return 0;
 
-    let value = 0;
-    if (selectedCheckboxes.includes("Midterm 1")) {
-        value += Number(row[`mt1_avg_${metric}`] || 0);
-    }
-    if (selectedCheckboxes.includes("Midterm 2")) {
-        value += Number(row[`mt2_avg_${metric}`] || 0);
-    }
-    if (selectedCheckboxes.includes("Final")) {
-        value += Number(row[`final_avg_${metric}`] || 0);
-    }
+function updateStatBox(elementId, metric, data, index) {
+    const container = document.getElementById(elementId);
+    container.innerHTML = ""; // Clear previous content
 
-    return value;
+    selectedCheckboxes.forEach((exam) => {
+        let value = 0;
+
+        if (exam === "Midterm 1") {
+            value = Number(data[index]?.[`mt1_avg_${metric}`]) || 0;
+        } else if (exam === "Midterm 2") {
+            value = Number(data[index]?.[`mt2_avg_${metric}`]) || 0;
+        } else if (exam === "Final") {
+            value = Number(data[index]?.[`final_avg_${metric}`]) || 0;
+        }
+
+        // Append only the values that exist
+        if (value !== 0) {
+            const statLine = document.createElement("div");
+            statLine.textContent = `${exam}: ${value.toFixed(2)}`;
+            container.appendChild(statLine);
+        }
+    });
+
+    // If no exams are selected, reset the stat box
+    if (selectedCheckboxes.length === 0) {
+        container.textContent = "-";
+    }
 }
 
 function updateVisualization(index) {
@@ -612,6 +624,12 @@ function updateVisualization(index) {
         return;
     }
 
+    // Get the selected exams dynamically
+    selectedExams = selectedCheckboxes.map((exam) =>
+        exam.toLowerCase().replace(" ", "_")
+    );
+
+    // Dynamically fetch measure values for selected exams
     const stressLevels = {
         hr: getAveragedStress(index),
         bvp: getAveragedStress(index),
@@ -619,26 +637,21 @@ function updateVisualization(index) {
         eda: getAveragedStress(index),
     };
 
-    const stressLevels2 = {
-        hr: getMeasureValue(hrData, index, "HR"),
-        bvp: getMeasureValue(bvpData, index, "BVP"),
-        temp: getMeasureValue(tempData, index, "TEMP"),
-        eda: getMeasureValue(edaData, index, "EDA"),
-    };
-
     console.log(`Updating visualization: Index=${index}`, stressLevels);
 
+    // Update stat boxes dynamically
+    updateStatBox("heart-rate-value", "HR", hrData, index);
+    updateStatBox("bvp-value", "BVP", bvpData, index);
+    updateStatBox("temperature-value", "TEMP", tempData, index);
+    updateStatBox("eda-value", "EDA", edaData, index);
+
     // Update overlay color based on overall stress level
-    const overallStress = (stressLevels.hr + stressLevels.bvp + stressLevels.temp + stressLevels.eda) / 4;
+    const overallStress =
+        (stressLevels.hr + stressLevels.bvp + stressLevels.temp + stressLevels.eda) / 4;
     const colorScale = d3.scaleLinear().domain([0.2, 0.8]).range(["blue", "red"]);
     document.querySelector(".overlay").style.backgroundColor = colorScale(overallStress);
-
-    // Update stress stats dynamically
-    document.getElementById("heart-rate-value").textContent = stressLevels2.hr.toFixed(2);
-    document.getElementById("bvp-value").textContent = stressLevels2.bvp.toFixed(2);
-    document.getElementById("temperature-value").textContent = stressLevels2.temp.toFixed(2);
-    document.getElementById("eda-value").textContent = stressLevels2.eda.toFixed(2);
 }
+
 
 // Event listeners
 document.addEventListener("DOMContentLoaded", () => {
