@@ -449,67 +449,6 @@ function updateTooltipPosition(event) {
   tooltip.style.top = `${tooltipY}px`;
 }
 
-// Event listener for checkboxes
-// document
-//   .querySelectorAll('#testFilter input[type="checkbox"]')
-//   .forEach((checkbox) => {
-//     checkbox.addEventListener("change", () => {
-//       // Update selected checkboxes
-//       selectedCheckboxes = Array.from(
-//         document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
-//       ).map((checkbox) => checkbox.value);
-
-//       // Get the selected radio button
-//       selectedRadio = document.querySelector(
-//         'input[name="measure"]:checked'
-//       )?.value;
-
-//       if (selectedCheckboxes.length === 0) {
-//         createEmptyScatterPlot();
-//         const title = document.querySelector("#graphTitle");
-//         title.textContent = '';
-//         return;
-//       }
-
-//       // Re-load and update the graph whenever a checkbox or radio button is selected
-//       if (selectedRadio) {
-//         let filePath;
-//         let measure_name;
-//         if (selectedRadio === "hr") {
-//           filePath = "data/avg_HR.csv";
-//           measure_name = "Average Heart Rate (bpm)";
-//         } else if (selectedRadio === "bvp") {
-//           filePath = "data/avg_BVP.csv";
-//           measure_name = "Average Blood Volume Pressure (µV)";
-//         } else if (selectedRadio === "temp") {
-//           filePath = "data/avg_TEMP.csv";
-//           measure_name = "Average Skin Surface Temperature (°C)";
-//         } else if (selectedRadio === "eda") {
-//           filePath = "data/avg_EDA.csv";
-//           measure_name = "Average Electrodermal Activity (μS)";
-//         }
-
-//         // Load the data and update the plot
-//         loadData(
-//           filePath,
-//           selectedRadio.toUpperCase(),
-//           selectedCheckboxes
-//         ).then(() => createScatterPlot(measure_name));
-//       }
-
-//       selectedExams = Array.from(
-//         document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
-//       ).map((checkbox) => checkbox.value.toLowerCase().replace(" ", "_"));
-
-//       if (selectedExams.length === 0) {
-//         selectedExams = [];
-//       }
-
-//       updateVisualization(
-//         +document.querySelector("#slider input[type='range']").value
-//       );
-//     });
-//   });
 document
     .querySelectorAll('#testFilter input[type="checkbox"]')
     .forEach((checkbox) => {
@@ -631,6 +570,21 @@ document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
   });
 });
 
+function updateLegendMarker(overallStress) {
+    const minStress = 0.35; // Match the body's scale
+    const maxStress = 0.65; // Match the body's scale
+
+    // Ensure the stress level stays within bounds
+    const clampedStress = Math.max(minStress, Math.min(maxStress, overallStress));
+
+    // Map the stress level to the legend bar width
+    const legendWidth = 300; // Width of the legend gradient
+    const markerPosition = ((clampedStress - minStress) / (maxStress - minStress)) * legendWidth;
+
+    // Update the marker position
+    document.querySelector("#legend-marker").style.left = `${markerPosition}px`;
+}
+
 function getAveragedStress(index) {
   if (!stressData || stressData.length === 0) return 0;
 
@@ -732,8 +686,10 @@ function updateVisualization(index) {
     // Update overlay color based on overall stress level
     const overallStress =
         (stressLevels.hr + stressLevels.bvp + stressLevels.temp + stressLevels.eda) / 4;
-    const colorScale = d3.scaleLinear().domain([0.2, 0.8]).range(["blue", "red"]);
-    document.querySelector(".overlay").style.backgroundColor = colorScale(overallStress);
+    const colorScale = d3.scaleLinear().domain([0.35, 0.65]).range(["blue", "red"]);
+    const stressColor = colorScale(Math.max(0.4, Math.min(0.6, overallStress))); 
+    document.querySelector(".overlay").style.backgroundColor = stressColor;
+    updateLegendMarker(overallStress);
 }
 
 // Event listeners

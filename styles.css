@@ -267,6 +267,8 @@ dl.info dd {
 }
 
 .body-container {
+    flex-direction: column;
+    align-items: center;
     position: relative;
     width: 175px;
     height: 396px;
@@ -312,4 +314,48 @@ body {
 
 #write-up {
     padding-left: 20%;
+}
+
+#body-stats-container {
+    display:flex;
+    flex-direction: column;
+}
+
+#stress-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+    position: relative; /* Ensure it stays below */
+    flex-direction: row;
+}
+
+.legend-container {
+    position: relative;
+    width: 300px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.legend-gradient {
+    width: 300px;
+    height: 20px;
+    border-radius: 10px;
+    background: linear-gradient(to right, blue, red);
+    opacity: 0.6;
+}
+
+#legend-marker {
+    position: absolute;
+    top: -10px; /* Adjusts marker above the gradient */
+    width: 4px;
+    height: 30px;
+    background: black;
+    border-radius: 2px;
+    transition: left 0.3s ease-in-out;
 }
