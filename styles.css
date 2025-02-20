@@ -42,13 +42,15 @@ html {
 
 /* Make sure the slider stretches fully */
 #slider {
-    position: sticky;
     display: flex;
     align-items: center;
+    justify-content: center;
+    position: sticky;
+    display: flex;
     flex-grow: 1;
     min-width: 100px;
-    width: 100%;
-    max-width: 1200px;
+    width: 80%;
+    /* max-width: 1200px; */
     padding: 10px;
     /* padding-right: 50px; */
 }
@@ -56,17 +58,17 @@ html {
 /* Force labels and slider to be in a single line */
 #slider label {
     white-space: nowrap;
-    margin: 5px;
+    margin: 10px;
     font-size: 20px;
 }
 
 /* Wrapper for the slider to allow text overlay */
 .slider-wrapper {
-    position: relative;
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    width: 100%;
     z-index: 1;
 }
 
