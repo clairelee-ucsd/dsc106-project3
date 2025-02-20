@@ -565,19 +565,25 @@ function updateVisualization(index) {
         return;
     }
 
-    const stressLevel = getAveragedStress(index);
-    console.log(
-        `Updating visualization: Index=${index}, Stress Level=${stressLevel}`
-    );
+    const stressLevels = {
+        hr: getAveragedStress(index, "hr"),
+        bvp: getAveragedStress(index, "bvp"),
+        temp: getAveragedStress(index, "temp"),
+        eda: getAveragedStress(index, "eda"),
+    };
 
+    console.log(`Updating visualization: Index=${index}`, stressLevels);
+
+    // Update overlay color based on overall stress level
+    const overallStress = (stressLevels.hr + stressLevels.bvp + stressLevels.temp + stressLevels.eda) / 4;
     const colorScale = d3.scaleLinear().domain([0.2, 0.8]).range(["blue", "red"]);
+    document.querySelector(".overlay").style.backgroundColor = colorScale(overallStress);
 
-    const overlay = document.querySelector(".overlay");
-    if (overlay) {
-        overlay.style.backgroundColor = colorScale(stressLevel);
-    } else {
-        console.error("Overlay element not found!");
-    }
+    // Update stress stats dynamically
+    document.getElementById("heart-rate-value").textContent = stressLevels.hr.toFixed(2);
+    document.getElementById("bvp-value").textContent = stressLevels.bvp.toFixed(2);
+    document.getElementById("temperature-value").textContent = stressLevels.temp.toFixed(2);
+    document.getElementById("eda-value").textContent = stressLevels.eda.toFixed(2);
 }
 
 // Event listeners
