@@ -1,86 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How Do Students' Stress Fluctuate Over the Course of Different Exams</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      How Do Students' Stress Fluctuate Over the Course of Different Exams
+    </title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<body>
+  <body>
     <h1>DSC106 Project 3</h1>
-    <br>
+    <br />
     <h3>Choose from the Tests Below:</h3>
     <div id="params">
-        <div id="testFilter">
-            <label><input type="checkbox" name="option1" value="Midterm 1"> Midterm 1</label>
-            <label><input type="checkbox" name="option2" value="Midterm 2"> Midterm 2</label>
-            <label><input type="checkbox" name="option3" value="Final"> Final</label>
+      <div id="testFilter">
+        <label
+          ><input type="checkbox" name="option1" value="Midterm 1" /> Midterm
+          1</label
+        >
+        <label
+          ><input type="checkbox" name="option2" value="Midterm 2" /> Midterm
+          2</label
+        >
+        <label
+          ><input type="checkbox" name="option3" value="Final" /> Final</label
+        >
+      </div>
+      <div id="slider">
+        <label for="sliderStart">Start</label>
+        <div class="slider-wrapper">
+          <span class="slider-text">Test Duration</span>
+          <!-- Static background text -->
+          <input type="range" id="slider" min="0" max="100" value="0" />
         </div>
-        <div id="slider">
-            <label for="sliderStart">Start</label>
-            <div class="slider-wrapper">
-                <span class="slider-text">Test Duration</span> <!-- Static background text -->
-                <input type="range" id="slider" min="0" max="100" value="0">
-            </div>
-            <label for="sliderEnd">End</label>
-        </div>
+        <label for="sliderEnd">End</label>
+      </div>
     </div>
 
-    <div id=content>
-        <div class="tooltip-left">
-            <div class="tt-top-left">
-
-            </div>
-            <div class="tt-bottom-left">
-
-            </div>
+    <div id="content">
+      <div class="tooltip-left">
+        <div class="tt-top-left"></div>
+        <div class="tt-bottom-left"></div>
+      </div>
+      <div>
+        <h3>Overall Stress Level</h3>
+        <div class="body-container">
+          <img src="silhouette.png" alt="Silhouette" class="silhouette" />
+          <div class="overlay"></div>
         </div>
-        <div>
-            <h3>Overall Stress Level</h3>
-            <div class="body-container">
-                <img src="silhouette.png" alt="Silhouette" class="silhouette">
-                <div class="overlay"></div>
-            </div>
+      </div>
+      <div class="tooltip-right">
+        <div class="tt-top-right"></div>
+        <div class="tt-bottom-right"></div>
+      </div>
+
+      <div id="graph-container">
+        <h3>Plotted Comparisons</h3>
+        <div id="graphRadioButtons">
+          <h4>Select 1:</h4>
+          <label
+            ><input type="radio" name="measure" value="hr" /> Heart Rate
+            (bpm)</label
+          >
+          <label
+            ><input type="radio" name="measure" value="bvp" /> Blood Volume
+            Pressure (µV)</label
+          >
+          <label
+            ><input type="radio" name="measure" value="temp" /> Skin Surface
+            Temperature (°C)</label
+          >
+          <label
+            ><input type="radio" name="measure" value="eda" /> Electrodermal
+            Activity (μS)</label
+          >
         </div>
-        <div class="tooltip-right">
-            <div class="tt-top-right">
-
-            </div>
-            <div class="tt-bottom-right">
-
-            </div>
+        <div id="graphs">
+          <h4 id="graphTitle"></h4>
+          <!-- graphs will be placed here -->
         </div>
 
-        <div id="graph-container">
-            <h3>Plotted Comparisons</h3>
-            <div id="graphRadioButtons">
-                <h4>Select 1:</h4>
-                <label><input type="radio" name="measure" value="hr"> Heart Rate (bpm)</label>
-                <label><input type="radio" name="measure" value="bvp"> Blood Volume Pressure (µV)</label>
-                <label><input type="radio" name="measure" value="temp"> Skin Surface Temperature (°C)</label>
-                <label><input type="radio" name="measure" value="eda"> Electrodermal Activity (μS)</label>
-            </div>
-            <div id="graphs">
-                <!-- graphs will be placed here -->
-            </div>
+        <div id="chart"></div>
 
-            <div id="chart"></div>
+        <dl id="tooltip" class="info tooltip" hidden>
+          <dt>Test Progress</dt>
+          <dd id="test_progress"></dd>
 
-            <dl id="tooltip" class="info tooltip" hidden>
-                <dt>Test Progress</dt>
-                <dd id="test_progress"></dd>
-
-                <dt id="measurement_name"></dt>
-                <dd id="measurement_value"></dd>
-            </dl>
-        </div>
+          <dt id="measurement_name"></dt>
+          <dd id="measurement_value"></dd>
+        </dl>
+      </div>
     </div>
 
     <script src="main.js" type="module"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-</body>
-
+  </body>
 </html>

@@ -63,7 +63,7 @@ async function loadStressData() {
 function createScatterPlot(measure_name) {
   const width = 1000;
   const height = 600;
-  const margin = { top: 10, right: 10, bottom: 30, left: 20 };
+  const margin = { top: 50, right: 20, bottom: 50, left: 20 }; // Adjusted margins
 
   const maxAvgMeasure = Math.max(
     ...data.map((d) => {
@@ -76,6 +76,20 @@ function createScatterPlot(measure_name) {
 
       // Return the maximum measure value from the available ones
       return Math.max(...measures);
+    })
+  );
+
+  const minAvgMeasure = Math.min(
+    ...data.map((d) => {
+      // Extract available measures
+      const measures = [];
+
+      if (d.midterm1_measure !== undefined) measures.push(d.midterm1_measure);
+      if (d.midterm2_measure !== undefined) measures.push(d.midterm2_measure);
+      if (d.final_measure !== undefined) measures.push(d.final_measure);
+
+      // Return the maximum measure value from the available ones
+      return Math.min(...measures);
     })
   );
 
@@ -96,7 +110,7 @@ function createScatterPlot(measure_name) {
 
   yScale = d3
     .scaleLinear()
-    .domain([0, maxAvgMeasure])
+    .domain([Math.min(0, minAvgMeasure), maxAvgMeasure])
     .range([height - margin.bottom, margin.top]);
 
   const usableArea = {
@@ -126,7 +140,7 @@ function createScatterPlot(measure_name) {
     .append("text")
     .attr("class", "x-axis-title")
     .attr("x", width / 2)
-    .attr("y", height + 20) // Position the title just below the X-axis
+    .attr("y", height - margin.bottom + 40) // Position the title just below the X-axis
     .style("text-anchor", "middle")
     .style("font-size", "16px")
     .text("Test Progress");
@@ -169,9 +183,23 @@ function createScatterPlot(measure_name) {
     .domain(["Midterm 1", "Midterm 2", "Final"])
     .range(["steelblue", "orange", "green"]);
 
+  // svg.append("text").attr()
+
   const dotsGroup = svg.append("g").attr("class", "dots");
-  let y = 400;
+  let y = 500;
   let numLeg = 0;
+
+  // Add a vertical line
+  const verticalLine = svg
+    .append("line")
+    .attr("class", "vertical-line")
+    .attr("x1", xScale(0))
+    .attr("x2", xScale(0))
+    .attr("y1", margin.top)
+    .attr("y2", height - margin.bottom)
+    .attr("stroke", "pink")
+    .attr("stroke-width", 2);
+
   // Loop through each selected checkbox/test and draw its series
   selectedCheckboxes.forEach((test) => {
     // Determine the property name in data for this test
@@ -251,7 +279,16 @@ function createScatterPlot(measure_name) {
 
       y += 20;
       numLeg += 1;
+      updateTitle(selectedCheckboxes, selectedRadio);
     }
+  });
+
+  // Event listener for the slider to update the vertical line position
+  const slider = document.querySelector("#slider input[type='range']");
+  slider.addEventListener("input", (event) => {
+    const value = event.target.value / 89 / 2;
+    const xPosition = xScale(value);
+    verticalLine.attr("x1", xPosition).attr("x2", xPosition);
   });
 }
 
@@ -463,7 +500,10 @@ function updateVisualization(index) {
     `Updating visualization: Index=${index}, Stress Level=${stressLevel}`
   );
 
-  const colorScale = d3.scaleLinear().domain([0, 1]).range(["blue", "red"]);
+  const colorScale = d3
+    .scaleLinear()
+    .domain([0, 0.5, 1])
+    .range(["#d73027", "#f0f0f0", "#1a98ff"]);
 
   const overlay = document.querySelector(".overlay");
   if (overlay) {
@@ -501,3 +541,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadStressData();
 });
+
+async function updateTitle(tests, measure) {
+  const title = document.querySelector("#graphTitle");
+  title.textContent = `${tests.join(", ")} Exam: ${measure.toUpperCase()} Data`;
+}
