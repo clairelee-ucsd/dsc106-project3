@@ -24,7 +24,7 @@ html {
 }
 
 #filter-container{
-    position: fixed;
+    position: relative;
     left: 30px;
     display: flex;
     flex-direction: column;
@@ -263,7 +263,7 @@ dl.info dd {
 .body h3 {
     text-align: center;
     width: 100%;
-    margin-bottom: 2em;
+    font-size: 80%;
 }
 
 .body-container {

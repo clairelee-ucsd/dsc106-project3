@@ -637,21 +637,4 @@ document.addEventListener("DOMContentLoaded", function () {
             sliderContainer.style.position = "relative";
         }
     });
-
-    // const filterContainer = document.getElementById("filter-container");
-    // // const filter = document.getElementById("fi");
-
-    // let filterOffset = filterContainer.offsetTop; // Get the initial position of the slider
-
-    // window.addEventListener("scroll", function () {
-    //     if (window.scrollY >= sliderOffset) {
-    //         filterContainer.style.position = "fixed";
-    //         filterContainer.style.top = "0";
-    //         filterContainer.style.left = "0";
-    //         filterContainer.style.width = "100%";
-    //         filterContainer.style.zIndex = "1000";
-    //     } else {
-    //         filterContainer.style.position = "relative";
-    //     }
-    // });
 });
