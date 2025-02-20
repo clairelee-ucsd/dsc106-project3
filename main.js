@@ -8,6 +8,18 @@ let selectedCheckboxes = [];
 let selectedRadio = "";
 let stressData = [];
 let selectedExams = [];
+let hrData = [];
+let bvpData = [];
+let tempData = [];
+let edaData = [];
+
+async function loadMeasureData() {
+    hrData = await d3.csv("data/avg_HR.csv");
+    bvpData = await d3.csv("data/avg_BVP.csv");
+    tempData = await d3.csv("data/avg_TEMP.csv");
+    edaData = await d3.csv("data/avg_EDA.csv");
+    console.log("Measure data loaded.");
+}
 
 async function loadData(filePath, measure, selectedCheckboxes) {
     // Load the CSV data
@@ -558,6 +570,23 @@ function getAveragedStress(index) {
         selectedStressValues.length
     );
 }
+function getMeasureValue(data, index, metric) {
+    const row = data[index];
+    if (!row) return 0;
+
+    let value = 0;
+    if (selectedCheckboxes.includes("Midterm 1")) {
+        value += Number(row[`mt1_avg_${metric}`] || 0);
+    }
+    if (selectedCheckboxes.includes("Midterm 2")) {
+        value += Number(row[`mt2_avg_${metric}`] || 0);
+    }
+    if (selectedCheckboxes.includes("Final")) {
+        value += Number(row[`final_avg_${metric}`] || 0);
+    }
+
+    return value;
+}
 
 function updateVisualization(index) {
     if (!stressData || stressData.length === 0) {
@@ -566,10 +595,17 @@ function updateVisualization(index) {
     }
 
     const stressLevels = {
-        hr: getAveragedStress(index, "hr"),
-        bvp: getAveragedStress(index, "bvp"),
-        temp: getAveragedStress(index, "temp"),
-        eda: getAveragedStress(index, "eda"),
+        hr: getAveragedStress(index),
+        bvp: getAveragedStress(index),
+        temp: getAveragedStress(index),
+        eda: getAveragedStress(index),
+    };
+
+    const stressLevels2 = {
+        hr: getMeasureValue(hrData, index, "HR"),
+        bvp: getMeasureValue(bvpData, index, "BVP"),
+        temp: getMeasureValue(tempData, index, "TEMP"),
+        eda: getMeasureValue(edaData, index, "EDA"),
     };
 
     console.log(`Updating visualization: Index=${index}`, stressLevels);
@@ -580,10 +616,10 @@ function updateVisualization(index) {
     document.querySelector(".overlay").style.backgroundColor = colorScale(overallStress);
 
     // Update stress stats dynamically
-    document.getElementById("heart-rate-value").textContent = stressLevels.hr.toFixed(2);
-    document.getElementById("bvp-value").textContent = stressLevels.bvp.toFixed(2);
-    document.getElementById("temperature-value").textContent = stressLevels.temp.toFixed(2);
-    document.getElementById("eda-value").textContent = stressLevels.eda.toFixed(2);
+    document.getElementById("heart-rate-value").textContent = stressLevels2.hr.toFixed(2);
+    document.getElementById("bvp-value").textContent = stressLevels2.bvp.toFixed(2);
+    document.getElementById("temperature-value").textContent = stressLevels2.temp.toFixed(2);
+    document.getElementById("eda-value").textContent = stressLevels2.eda.toFixed(2);
 }
 
 // Event listeners
@@ -612,6 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     loadStressData();
+    loadMeasureData();
     
 });
 
