@@ -606,6 +606,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     loadStressData();
+    
 });
 
 async function updateTitle(tests, measure) {
