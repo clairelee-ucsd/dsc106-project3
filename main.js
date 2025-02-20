@@ -450,66 +450,156 @@ function updateTooltipPosition(event) {
 }
 
 // Event listener for checkboxes
+// document
+//   .querySelectorAll('#testFilter input[type="checkbox"]')
+//   .forEach((checkbox) => {
+//     checkbox.addEventListener("change", () => {
+//       // Update selected checkboxes
+//       selectedCheckboxes = Array.from(
+//         document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
+//       ).map((checkbox) => checkbox.value);
+
+//       // Get the selected radio button
+//       selectedRadio = document.querySelector(
+//         'input[name="measure"]:checked'
+//       )?.value;
+
+//       if (selectedCheckboxes.length === 0) {
+//         createEmptyScatterPlot();
+//         const title = document.querySelector("#graphTitle");
+//         title.textContent = '';
+//         return;
+//       }
+
+//       // Re-load and update the graph whenever a checkbox or radio button is selected
+//       if (selectedRadio) {
+//         let filePath;
+//         let measure_name;
+//         if (selectedRadio === "hr") {
+//           filePath = "data/avg_HR.csv";
+//           measure_name = "Average Heart Rate (bpm)";
+//         } else if (selectedRadio === "bvp") {
+//           filePath = "data/avg_BVP.csv";
+//           measure_name = "Average Blood Volume Pressure (µV)";
+//         } else if (selectedRadio === "temp") {
+//           filePath = "data/avg_TEMP.csv";
+//           measure_name = "Average Skin Surface Temperature (°C)";
+//         } else if (selectedRadio === "eda") {
+//           filePath = "data/avg_EDA.csv";
+//           measure_name = "Average Electrodermal Activity (μS)";
+//         }
+
+//         // Load the data and update the plot
+//         loadData(
+//           filePath,
+//           selectedRadio.toUpperCase(),
+//           selectedCheckboxes
+//         ).then(() => createScatterPlot(measure_name));
+//       }
+
+//       selectedExams = Array.from(
+//         document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
+//       ).map((checkbox) => checkbox.value.toLowerCase().replace(" ", "_"));
+
+//       if (selectedExams.length === 0) {
+//         selectedExams = [];
+//       }
+
+//       updateVisualization(
+//         +document.querySelector("#slider input[type='range']").value
+//       );
+//     });
+//   });
 document
-  .querySelectorAll('#testFilter input[type="checkbox"]')
-  .forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      // Update selected checkboxes
-      selectedCheckboxes = Array.from(
-        document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
-      ).map((checkbox) => checkbox.value);
+    .querySelectorAll('#testFilter input[type="checkbox"]')
+    .forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            // Reset the slider to the start
+            const slider = document.querySelector("#slider input[type='range']");
+            slider.value = slider.min;
 
-      // Get the selected radio button
-      selectedRadio = document.querySelector(
-        'input[name="measure"]:checked'
-      )?.value;
+            // Update selected checkboxes
+            selectedCheckboxes = Array.from(
+                document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
+            ).map((checkbox) => checkbox.value);
 
-      if (selectedCheckboxes.length === 0) {
-        createEmptyScatterPlot();
-        const title = document.querySelector("#graphTitle");
-        title.textContent = '';
-        return;
-      }
+            // Get the selected radio button
+            selectedRadio = document.querySelector(
+                'input[name="measure"]:checked'
+            )?.value;
 
-      // Re-load and update the graph whenever a checkbox or radio button is selected
-      if (selectedRadio) {
-        let filePath;
-        let measure_name;
-        if (selectedRadio === "hr") {
-          filePath = "data/avg_HR.csv";
-          measure_name = "Average Heart Rate (bpm)";
-        } else if (selectedRadio === "bvp") {
-          filePath = "data/avg_BVP.csv";
-          measure_name = "Average Blood Volume Pressure (µV)";
-        } else if (selectedRadio === "temp") {
-          filePath = "data/avg_TEMP.csv";
-          measure_name = "Average Skin Surface Temperature (°C)";
-        } else if (selectedRadio === "eda") {
-          filePath = "data/avg_EDA.csv";
-          measure_name = "Average Electrodermal Activity (μS)";
-        }
+            if (selectedCheckboxes.length === 0) {
+                createEmptyScatterPlot();
+                document.querySelector("#graphTitle").textContent = '';
+                return;
+            }
 
-        // Load the data and update the plot
-        loadData(
-          filePath,
-          selectedRadio.toUpperCase(),
-          selectedCheckboxes
-        ).then(() => createScatterPlot(measure_name));
-      }
+            // Re-load and update the graph whenever a checkbox or radio button is selected
+            if (selectedRadio) {
+                let filePath;
+                let measure_name;
+                if (selectedRadio === "hr") {
+                    filePath = "data/avg_HR.csv";
+                    measure_name = "Average Heart Rate (bpm)";
+                } else if (selectedRadio === "bvp") {
+                    filePath = "data/avg_BVP.csv";
+                    measure_name = "Average Blood Volume Pressure (µV)";
+                } else if (selectedRadio === "temp") {
+                    filePath = "data/avg_TEMP.csv";
+                    measure_name = "Average Skin Surface Temperature (°C)";
+                } else if (selectedRadio === "eda") {
+                    filePath = "data/avg_EDA.csv";
+                    measure_name = "Average Electrodermal Activity (μS)";
+                }
 
-      selectedExams = Array.from(
-        document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
-      ).map((checkbox) => checkbox.value.toLowerCase().replace(" ", "_"));
+                // Load the data and update the plot
+                loadData(
+                    filePath,
+                    selectedRadio.toUpperCase(),
+                    selectedCheckboxes
+                ).then(() => createScatterPlot(measure_name));
+            }
 
-      if (selectedExams.length === 0) {
-        selectedExams = [];
-      }
+            selectedExams = selectedCheckboxes.map(checkbox => checkbox.toLowerCase().replace(" ", "_"));
 
-      updateVisualization(
-        +document.querySelector("#slider input[type='range']").value
-      );
+            updateVisualization(+slider.value);
+        });
     });
-  });
+
+// Event listener for radio buttons
+document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
+    radioButton.addEventListener("change", () => {
+        // Reset the slider to the start
+        const slider = document.querySelector("#slider input[type='range']");
+        slider.value = slider.min;
+
+        selectedRadio = document.querySelector('input[name="measure"]:checked')?.value;
+
+        if (selectedRadio && selectedCheckboxes.length > 0) {
+            let filePath;
+            let measure_name;
+            if (selectedRadio === "hr") {
+                filePath = "data/avg_HR.csv";
+                measure_name = "Average Heart Rate (bpm)";
+            } else if (selectedRadio === "bvp") {
+                filePath = "data/avg_BVP.csv";
+                measure_name = "Average Blood Volume Pressure (µV)";
+            } else if (selectedRadio === "temp") {
+                filePath = "data/avg_TEMP.csv";
+                measure_name = "Average Skin Surface Temperature (°C)";
+            } else if (selectedRadio === "eda") {
+                filePath = "data/avg_EDA.csv";
+                measure_name = "Average Electrodermal Activity (μS)";
+            }
+
+            loadData(filePath, selectedRadio.toUpperCase(), selectedCheckboxes)
+                .then(() => createScatterPlot(measure_name));
+        } else {
+            createEmptyScatterPlot(); // Reset to empty plot if nothing is selected
+        }
+    });
+});
+
 
 // Event listener for radio buttons
 document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
@@ -582,68 +672,54 @@ function getAveragedStress(index) {
     selectedStressValues.length
   );
 }
+function getMeasureValue(data, index, metric) {
+  const row = data[index];
+  if (!row) return 0;
 
-function updateStatBox(elementId, metric, data, index) {
-    const container = document.getElementById(elementId);
-    container.innerHTML = ""; // Clear previous content
+  let value = 0;
+  if (selectedCheckboxes.includes("Midterm 1")) {
+    value += Number(row[`mt1_avg_${metric}`] || 0);
+  }
+  if (selectedCheckboxes.includes("Midterm 2")) {
+    value += Number(row[`mt2_avg_${metric}`] || 0);
+  }
+  if (selectedCheckboxes.includes("Final")) {
+    value += Number(row[`final_avg_${metric}`] || 0);
+  }
 
-    selectedCheckboxes.forEach((exam) => {
-        let value = 0;
-
-        if (exam === "Midterm 1") {
-            value = Number(data[index]?.[`mt1_avg_${metric}`]) || 0;
-        } else if (exam === "Midterm 2") {
-            value = Number(data[index]?.[`mt2_avg_${metric}`]) || 0;
-        } else if (exam === "Final") {
-            value = Number(data[index]?.[`final_avg_${metric}`]) || 0;
-        }
-
-        // Append only the values that exist
-        if (value !== 0) {
-            const statLine = document.createElement("div");
-            statLine.textContent = `${exam}: ${value.toFixed(2)}`;
-            container.appendChild(statLine);
-        }
-    });
-
-    // If no exams are selected, reset the stat box
-    if (selectedCheckboxes.length === 0) {
-        container.textContent = "-";
-    }
+  return value;
 }
 
 function updateVisualization(index) {
-    if (!stressData || stressData.length === 0) {
-        console.warn("Stress data is not available yet.");
-        return;
-    }
+  if (!stressData || stressData.length === 0) {
+    console.warn("Stress data is not available yet.");
+    return;
+  }
 
-    // Get the selected exams dynamically
-    selectedExams = selectedCheckboxes.map((exam) =>
-        exam.toLowerCase().replace(" ", "_")
-    );
+  const stressLevels = {
+    hr: getAveragedStress(index),
+    bvp: getAveragedStress(index),
+    temp: getAveragedStress(index),
+    eda: getAveragedStress(index),
+  };
 
-    // Dynamically fetch measure values for selected exams
-    const stressLevels = {
-        hr: getAveragedStress(index),
-        bvp: getAveragedStress(index),
-        temp: getAveragedStress(index),
-        eda: getAveragedStress(index),
-    };
+  const stressLevels2 = {
+    hr: getMeasureValue(hrData, index, "HR"),
+    bvp: getMeasureValue(bvpData, index, "BVP"),
+    temp: getMeasureValue(tempData, index, "TEMP"),
+    eda: getMeasureValue(edaData, index, "EDA"),
+  };
 
-    console.log(`Updating visualization: Index=${index}`, stressLevels);
+  // Update overlay color based on overall stress level
+  const overallStress = (stressLevels.hr + stressLevels.bvp + stressLevels.temp + stressLevels.eda) / 4;
+  const colorScale = d3.scaleLinear().domain([0.2, 0.8]).range(["blue", "red"]);
+  document.querySelector(".overlay").style.backgroundColor = colorScale(overallStress);
 
-    // Update stat boxes dynamically
-    updateStatBox("heart-rate-value", "HR", hrData, index);
-    updateStatBox("bvp-value", "BVP", bvpData, index);
-    updateStatBox("temperature-value", "TEMP", tempData, index);
-    updateStatBox("eda-value", "EDA", edaData, index);
-
-    // Update overlay color based on overall stress level
-    const overallStress =
-        (stressLevels.hr + stressLevels.bvp + stressLevels.temp + stressLevels.eda) / 4;
-    const colorScale = d3.scaleLinear().domain([0.2, 0.8]).range(["blue", "red"]);
-    document.querySelector(".overlay").style.backgroundColor = colorScale(overallStress);
+  // Update stress stats dynamically
+  document.getElementById("heart-rate-value").textContent = stressLevels2.hr.toFixed(2);
+  document.getElementById("bvp-value").textContent = stressLevels2.bvp.toFixed(2);
+  document.getElementById("temperature-value").textContent = stressLevels2.temp.toFixed(2);
+  document.getElementById("eda-value").textContent = stressLevels2.eda.toFixed(2);
 }
 
 // Event listeners
