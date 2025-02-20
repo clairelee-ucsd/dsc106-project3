@@ -530,4 +530,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     loadStressData();
+    
 });
