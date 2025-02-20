@@ -702,7 +702,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Fix filter-container when the slider is fixed
       filterContainer.style.position = "fixed";
       filterContainer.style.top = `${sliderContainer.offsetHeight}px`; // Place it just below the slider
-      filterContainer.style.left = "30px"; // Maintain left position
+      filterContainer.style.left = "50px"; // Maintain left position
     } else {
       sliderContainer.style.position = "relative";
 
