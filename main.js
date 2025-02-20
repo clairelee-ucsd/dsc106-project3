@@ -8,6 +8,18 @@ let selectedCheckboxes = [];
 let selectedRadio = "";
 let stressData = [];
 let selectedExams = [];
+let hrData = [];
+let bvpData = [];
+let tempData = [];
+let edaData = [];
+
+async function loadMeasureData() {
+  hrData = await d3.csv("data/avg_HR.csv");
+  bvpData = await d3.csv("data/avg_BVP.csv");
+  tempData = await d3.csv("data/avg_TEMP.csv");
+  edaData = await d3.csv("data/avg_EDA.csv");
+  console.log("Measure data loaded.");
+}
 
 async function loadData(filePath, measure, selectedCheckboxes) {
   // Load the CSV data
@@ -569,6 +581,23 @@ function getAveragedStress(index) {
     selectedStressValues.reduce((a, b) => a + b, 0) /
     selectedStressValues.length
   );
+}
+function getMeasureValue(data, index, metric) {
+  const row = data[index];
+  if (!row) return 0;
+
+  let value = 0;
+  if (selectedCheckboxes.includes("Midterm 1")) {
+    value += Number(row[`mt1_avg_${metric}`] || 0);
+  }
+  if (selectedCheckboxes.includes("Midterm 2")) {
+    value += Number(row[`mt2_avg_${metric}`] || 0);
+  }
+  if (selectedCheckboxes.includes("Final")) {
+    value += Number(row[`final_avg_${metric}`] || 0);
+  }
+
+  return value;
 }
 
 function updateVisualization(index) {

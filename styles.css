@@ -23,6 +23,7 @@ html {
   z-index: 3;
 }
 
+<<<<<<< HEAD
 #filter-container {
   position: fixed;
   left: 30px;
@@ -33,7 +34,25 @@ html {
   padding: 10px;
   width: 30%;
   margin-left: 1em;
+=======
+#filter-container{
+    position: relative;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    width: 30%;
+    margin-left: 1em;
+    background: white;
+>>>>>>> d30326687ae310a45b7899ec170cc010db20f850
 }
+
+#filter-dummy {
+    width: 20%;
+}
+
 /* Checkbox container */
 #testFilter {
   display: flex;
@@ -260,9 +279,15 @@ dl.info dd {
 }
 
 .body h3 {
+<<<<<<< HEAD
   text-align: center;
   width: 100%;
   margin-bottom: 2em;
+=======
+    text-align: center;
+    width: 100%;
+    font-size: 120%;
+>>>>>>> d30326687ae310a45b7899ec170cc010db20f850
 }
 
 .body-container {
