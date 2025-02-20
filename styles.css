@@ -23,7 +23,7 @@ html {
     z-index: 3;
 }
 
-#filter-container{
+#filter-container {
     position: relative;
     left: 30px;
     display: flex;
@@ -34,6 +34,7 @@ html {
     width: 30%;
     margin-left: 1em;
 }
+
 /* Checkbox container */
 #testFilter {
     display: flex;
@@ -140,6 +141,7 @@ input[type="range"]::-webkit-slider-thumb {
     gap: 5em;
     margin-bottom: 1em;
 }
+
 #body-stats {
     display: flex;
     flex-direction: row;
@@ -233,8 +235,21 @@ dl.info dd {
     gap: 5em;
 }
 
+/* .stats-top-left,
+.stats-bottom-left,
+.stats-top-right,
+.stats-bottom-right {
+    margin: 0;
+    position: relative;
+    width: 250px;
+    height: 150px;
+    border: 2px solid #333;
+    border-radius: 25px;
+    background-color: #f1f1f17d;
+} */
+
 .stats-box {
-    width: 220px;
+    width: 180px;
     height: 100px;
     border: 2px solid #333;
     border-radius: 15px;
@@ -247,21 +262,10 @@ dl.info dd {
     font-weight: bold;
 }
 
-.stats-box h4 {
-    margin: 0;
-    font-size: 0.8em;
-    text-align: center;
-}
-
-.stats-box p {
-    margin: 5px;
-    font-size: 0.8em;
-    font-weight: normal;
-}
-
 .body h3 {
     text-align: center;
     width: 100%;
+    font-size: 120%;
 }
 
 .body-container {
@@ -279,11 +283,11 @@ dl.info dd {
 }
 
 .overlay {
-    position: center;
+    position: absolute;
     width: 100%;
     height: 100%;
     background-color: blue;
-    opacity: 300%;
+    opacity: 100%;
     z-index: 2;
     transition: background-color 0.3s ease;
 
@@ -301,4 +305,14 @@ dl.info dd {
 
 #graph-container {
     width: 100%;
+    margin-left: 40%;
+    /* height: 800px; */
+}
+
+body {
+    font: 100% system-ui;
+}
+
+#write-up {
+    padding-left: 20%;
 }
