@@ -18,7 +18,6 @@ async function loadMeasureData() {
   bvpData = await d3.csv("data/avg_BVP.csv");
   tempData = await d3.csv("data/avg_TEMP.csv");
   edaData = await d3.csv("data/avg_EDA.csv");
-  console.log("Measure data loaded.");
 }
 
 async function loadData(filePath, measure, selectedCheckboxes) {
@@ -51,7 +50,6 @@ async function loadData(filePath, measure, selectedCheckboxes) {
 async function loadStressData() {
   try {
     const response = await d3.json("stress_data.json");
-    console.log("Stress data loaded:", response);
 
     if (!response || response.length === 0) {
       console.error("Stress data is empty!");
@@ -551,11 +549,6 @@ function getAveragedStress(index) {
     (exam) => stressData[index][`${exam}_stress`]
   );
 
-  console.log(
-    `Index: ${index}, Selected Exams: ${selectedExams}, Stress Values:`,
-    selectedStressValues
-  );
-
   // If only one exam is selected, return its stress directly
   if (selectedStressValues.length === 1) {
     return selectedStressValues[0];
@@ -626,8 +619,6 @@ function updateVisualization(index) {
     temp: getMeasureValue(tempData, index, "TEMP"),
     eda: getMeasureValue(edaData, index, "EDA"),
   };
-
-  console.log(`Updating visualization: Index=${index}`, stressLevels);
 
   // Update overlay color based on overall stress level
   const overallStress = (stressLevels.hr + stressLevels.bvp + stressLevels.temp + stressLevels.eda) / 4;
