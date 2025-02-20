@@ -23,48 +23,53 @@
         </div>
 
         <div id=content-top>
-            <div class="stress-stats-left">
-                <div class="stats-box" id="heart-rate">
-                    <h4>Heart Rate</h4>
-                    <p><span id="heart-rate-value">-</span> bpm</p>
-                </div>
-                <div class="stats-box" id="bvp">
-                    <h4>Blood Volume Pressure</h4>
-                    <p><span id="bvp-value">-</span> µV</p>
-                </div>
-            </div>
-            <div class="body">
-                <h3>Overall Stress Level</h3>
-                <div class="body-container">
-                    <img src="silhouette.png" alt="Silhouette" class="silhouette">
-                    <div class="overlay"></div>
-                </div>
-            </div>
-            <div class="stress-stats-right">
-                <div class="stats-box" id="temperature">
-                    <h4>Skin Surface Temperature</h4>
-                    <p><span id="temperature-value">-</span> °C</p>
-                </div>
-                <div class="stats-box" id="eda">
-                    <h4>Electrodermal Activity</h4>
-                    <p><span id="eda-value">-</span> μS</p>
-                </div>
-            </div>
-        </div>
-        <div id="content-bottom">
-            <h3>Choose from the Tests Below:</h3>
-            <div id="graph-container">
+            <div id="filter-container">
+                <h3>Choose from the Tests Below:</h3>
                 <div id="testFilter">
                     <label><input type="checkbox" name="option1" value="Midterm 1"> Midterm 1</label>
                     <label><input type="checkbox" name="option2" value="Midterm 2"> Midterm 2</label>
                     <label><input type="checkbox" name="option3" value="Final"> Final</label>
                 </div>
+                <h3>Choose a measure:</h3>
                 <div id="graphRadioButtons">
                     <label><input type="radio" name="measure" value="hr"> Heart Rate (bpm)</label>
                     <label><input type="radio" name="measure" value="bvp"> Blood Volume Pressure (µV)</label>
                     <label><input type="radio" name="measure" value="temp"> Skin Surface Temperature (°C)</label>
                     <label><input type="radio" name="measure" value="eda"> Electrodermal Activity (μS)</label>
                 </div>
+            </div>
+            <div id=body-stats>
+                <div class="stress-stats-left">
+                    <div class="stats-box" id="heart-rate">
+                        <h4>Heart Rate</h4>
+                        <p><span id="heart-rate-value">-</span> bpm</p>
+                    </div>
+                    <div class="stats-box" id="bvp">
+                        <h4>Blood Volume Pressure</h4>
+                        <p><span id="bvp-value">-</span> µV</p>
+                    </div>
+                </div>
+                <div class="body">
+                    <h3>Overall Stress Level</h3>
+                    <div class="body-container">
+                        <img src="silhouette.png" alt="Silhouette" class="silhouette">
+                        <div class="overlay"></div>
+                    </div>
+                </div>
+                <div class="stress-stats-right">
+                    <div class="stats-box" id="temperature">
+                        <h4>Skin Surface Temperature</h4>
+                        <p><span id="temperature-value">-</span> °C</p>
+                    </div>
+                    <div class="stats-box" id="eda">
+                        <h4>Electrodermal Activity</h4>
+                        <p><span id="eda-value">-</span> μS</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content-bottom">
+            <div id="graph-container">
                 <div id="graphs">
                     <h3>Plotted Comparisons</h3>
                     <h4 id="graphTitle"></h4>
