@@ -1,52 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Write Up</title>
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <h1>Write Up</h1>
-      <p>
-        The motivation for this project is to visualize how students' stress
-        changes over the duration of an exam. As students ourselves, we
-        resonated with this data. Because there are many different aspects to
-        this, such as the 4 different types of stress level measures (heart
-        rate, electrodermal activity, etc.), and also the type of exam (Midterm
-        1/2, Final), an interactive visualization is the best way to contain all
-        the information, and enable viewers to filter what specific aspects they
-        want to see. Additionally, since there is so much data, we found it
-        beneficial to track certain stressor levels at a certain point in time.
-        We included our slider to sync with our graph and body so we can
-        simultaneously see the average values of all the different measures
-        across the different exams, but also the audience's chosen measure +
-        exams.
-      </p>
-      <p>
-        Originally, our dataset contained stressor level information measured in 
-        different rates per second for different measures so we had to
-        aggregate our data to unify our measurement rates and to make all students' 
-        start times align since all students had slightly different start times.
-        Additionally we calculated average values amongst students (every percent of the
-        way done with the exam) so viewers can see a compressed, but more
-        interpretable, version of the data. Since midterms and finals had
-        different alotted times, changing them into one scale (test progress)
-        allowed us to combine and overlay everything. We made sure to include a
-        color palette that makes different exams easily distinguishable from
-        each other, and also a color scale that differentiates between low and
-        high.
-      </p>
-      <p>
-        To develop this project, we experimented with D3 and utilized a lot of
-        knowledge from past labs, and new ideas. For example, we included a
-        tooltip that allows users to interact with the graph and see exactly
-        what the data value is. We experimented with EventListeners and further
-        enabled interactivity, through intentional colors, sliders, and check
-        boxes.
-      </p>
-
-      <a href="index.html">
-        <button>Back to Project</button>
-      </a>
-</body>
+    <p>
+      The motivation for this project is to visualize how students' stress
+      changes over the duration of an exam, and how different stressor vary
+      throughout different exams. As students ourselves, we resonated with this
+      data, and think instructors can benefit as well through understanding
+      student perspectives. Because there are many different aspects to this,
+      such as the 4 different types of stress level measures (heart rate,
+      electrodermal activity, etc.), and also the type of exam (Midterm 1/2,
+      Final), an interactive visualization is the best way to contain all the
+      information, and enable viewers to filter what specific aspects they want
+      to see. Additionally, since there is so much data, we found it beneficial
+      to track certain stressor levels at a certain point in time. We included
+      our slider to sync with our graph and body so we can simultaneously see
+      the average values of all the different measures across the different
+      exams, but also visually, the audience's chosen measure + exams. The
+      slider connects the graph with the human body. This is valuable because
+      our goal is to visualize how stressors change over time.
+    </p>
+    <p>
+      Our development process was lengthy. Originally, our dataset contained
+      stressor level information measured in different rates per second for
+      different measures so we had to aggregate our data to unify our
+      measurement rates and to make all students' start times align since all
+      students had slightly different start times. Additionally we calculated
+      average values amongst students (every percent of the way done with the
+      exam) so viewers can see a compressed, but more interpretable, version of
+      the data. Since midterms and finals had different alotted times, changing
+      them into one scale (test progress) allowed us to combine and overlay
+      everything. We made sure to include a color palette that makes different
+      exams easily distinguishable from each other, and also a color scale that
+      differentiates between low and high. After cleaning and aggregating the
+      data, we created the checkboxes and radio buttons, and all the layouts for
+      the graphs, body, and slider. From there, we implemented the data by
+      graphing the points based off of the checked boxes / radio buttons, and
+      displaying the measures at a certain time next to the human, aligned with
+      the slider.
+    </p>
+    <p>
+      To develop this project, we experimented with D3 and utilized a lot of
+      knowledge from past labs, and new ideas. For example, we included a
+      tooltip that allows users to interact with the graph and see exactly what
+      the data value is at a certain point. We experimented with EventListeners
+      and further enabled interactivity, through intentional colors, sliders,
+      and check boxes.
+    </p>
+    <p>
+      For this project, Ada worked on creating the layouts and buttons. Claire
+      worked on displaying the data on the graph. Jenny worked with the slider
+      and connecting it to the body. Michelle worked on adding the vertical line
+      and cleaning up the project. It took a lot of time debugging when data
+      wasn't displayed, or changing the layout.
+    </p>
+    <a href="index.html">
+      <button>Back to Project</button>
+    </a>
+  </body>
 </html>
