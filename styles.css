@@ -377,3 +377,7 @@ body {
     margin-top: 5em;
     justify-content: center;
 }
+#graphTitle{
+    margin-top: 0;
+    font-size: 90%;
+}
