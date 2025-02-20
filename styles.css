@@ -4,15 +4,22 @@ html {
 }
 
 /* Main container holding checkboxes and slider */
-#params {
+#slider-container {
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
     align-items: center;
-    gap: 50px;
+    justify-content: center;
+    /* gap: 50px; */
     /* Reduced gap for better alignment */
     width: 100%;
+    overflow: hidden;
+    position: fixed;
+    /* top: 20px; */
+    /* left: 10px; */
+    background: white;
     padding: 10px;
-    position: relative;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 3;
 }
 
 /* Checkbox container */
@@ -34,11 +41,13 @@ html {
 
 /* Make sure the slider stretches fully */
 #slider {
+    position: sticky;
     display: flex;
     align-items: center;
     flex-grow: 1;
     min-width: 100px;
     width: 100%;
+    max-width: 1200px;
     padding: 10px;
     /* padding-right: 50px; */
 }
