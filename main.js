@@ -659,9 +659,9 @@ async function updateTitle(tests, measure) {
 
 document.addEventListener("DOMContentLoaded", function () {
     const sliderContainer = document.getElementById("slider-container");
-    const slider = document.getElementById("slider");
+    const filterContainer = document.getElementById("filter-container");
 
-    let sliderOffset = sliderContainer.offsetTop; // Get the initial position of the slider
+    let sliderOffset = sliderContainer.offsetTop; // Initial position of slider
 
     window.addEventListener("scroll", function () {
         if (window.scrollY >= sliderOffset) {
@@ -670,8 +670,18 @@ document.addEventListener("DOMContentLoaded", function () {
             sliderContainer.style.left = "0";
             sliderContainer.style.width = "100%";
             sliderContainer.style.zIndex = "1000";
+
+            // Fix filter-container when the slider is fixed
+            filterContainer.style.position = "fixed";
+            filterContainer.style.top = `${sliderContainer.offsetHeight}px`; // Place it just below the slider
+            filterContainer.style.left = "30px"; // Maintain left position
         } else {
             sliderContainer.style.position = "relative";
+
+            // Reset filter-container position when slider is not fixed
+            filterContainer.style.position = "absolute";
+            filterContainer.style.top = ""; // Reset to default positioning
+            filterContainer.style.left = "";
         }
     });
 });
