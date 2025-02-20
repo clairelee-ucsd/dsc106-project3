@@ -619,3 +619,22 @@ async function updateTitle(tests, measure) {
     const title = document.querySelector("#graphTitle");
     title.textContent = `${tests.join(", ")} Exam: ${measure.toUpperCase()} Data`;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sliderContainer = document.getElementById("slider-container");
+    const slider = document.getElementById("slider");
+
+    let sliderOffset = sliderContainer.offsetTop; // Get the initial position of the slider
+
+    window.addEventListener("scroll", function () {
+        if (window.scrollY >= sliderOffset) {
+            sliderContainer.style.position = "fixed";
+            sliderContainer.style.top = "0";
+            sliderContainer.style.left = "0";
+            sliderContainer.style.width = "100%";
+            sliderContainer.style.zIndex = "1000";
+        } else {
+            sliderContainer.style.position = "relative";
+        }
+    });
+});
