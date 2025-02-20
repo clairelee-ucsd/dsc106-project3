@@ -24,7 +24,7 @@ html {
 }
 
 #filter-container{
-    position: relative;
+    position: fixed;
     left: 30px;
     display: flex;
     flex-direction: column;
@@ -33,7 +33,13 @@ html {
     padding: 10px;
     width: 30%;
     margin-left: 1em;
+    background: white;
 }
+
+#filter-dummy {
+    width: 20%;
+}
+
 /* Checkbox container */
 #testFilter {
     display: flex;
@@ -263,7 +269,7 @@ dl.info dd {
 .body h3 {
     text-align: center;
     width: 100%;
-    font-size: 80%;
+    font-size: 120%;
 }
 
 .body-container {
