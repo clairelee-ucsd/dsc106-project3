@@ -39,33 +39,34 @@
       </div>
     </div>
     <div id=body-stats>
-      <div class="stress-stats-left">
-        <div class="stats-box" id="heart-rate">
-          <h4>Heart Rate</h4>
-          <p><span id="heart-rate-value">-</span> bpm</p>
+        <div class="stress-stats-left">
+            <div class="stats-box" id="heart-rate">
+                <h4>Heart Rate (bpm)</h4>
+                <p><span id="heart-rate-value">-</span> </p>
+            </div>
+            <div class="stats-box" id="bvp">
+                <h4>Blood Volume Pressure (µV)</h4>
+                <p><span id="bvp-value">-</span> </p>
+            </div>
         </div>
-        <div class="stats-box" id="bvp">
-          <h4>Blood Volume Pressure</h4>
-          <p><span id="bvp-value">-</span> µV</p>
+        <div class="body">
+            <h3>Overall Stress Level</h3>
+            <div class="body-container">
+                <img src="silhouette.png" alt="Silhouette" class="silhouette">
+                <div class="overlay"></div>
+            </div>
         </div>
-      </div>
-      <div class="body">
-        <h3>Overall Stress Level</h3>
-        <div class="body-container">
-          <img src="silhouette.png" alt="Silhouette" class="silhouette">
-          <div class="overlay"></div>
+        <div class="stress-stats-right">
+            <div class="stats-box" id="temperature">
+                <h4>Skin Surface Temperature (°C)</h4>
+                <p><span id="temperature-value">-</span> </p>
+            </div>
+            <div class="stats-box" id="eda">
+                <h4>Electrodermal Activity (μS)</h4>
+                <p><span id="eda-value">-</span> </p>
+            </div>
         </div>
-      </div>
-      <div class="stress-stats-right">
-        <div class="stats-box" id="temperature">
-          <h4>Skin Surface Temperature</h4>
-          <p><span id="temperature-value">-</span> °C</p>
-        </div>
-        <div class="stats-box" id="eda">
-          <h4>Electrodermal Activity</h4>
-          <p><span id="eda-value">-</span> μS</p>
-        </div>
-      </div>
+    </div>
     </div>
   </div>
   <div id="content-bottom">
