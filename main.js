@@ -85,7 +85,9 @@ function createEmptyScatterPlot() {
     .select("#chart")
     .append("svg")
     .attr("viewBox", `0 0 ${width} ${height}`)
-    .style("overflow", "visible");
+    .style("overflow", "visible")
+    .style("width", "100%") // Make it stretch within the container
+    .style("height", "auto");
 
   // Define scales with default ranges
   xScale = d3
@@ -110,14 +112,14 @@ function createEmptyScatterPlot() {
     .attr("transform", `translate(0, ${height - margin.bottom})`)
     .call(xAxis)
     .selectAll("text")
-    .style("font-size", "18px");
+    .style("font-size", "25px");
 
   svg
     .append("g")
     .attr("transform", `translate(${margin.left}, 0)`)
     .call(yAxis)
     .selectAll("text")
-    .style("font-size", "18px");
+    .style("font-size", "25px");
 
   // Add Placeholder Titles
   svg
@@ -125,7 +127,7 @@ function createEmptyScatterPlot() {
     .attr("x", width / 2)
     .attr("y", height + 30)
     .style("text-anchor", "middle")
-    .style("font-size", "25px")
+    .style("font-size", "35px")
     .text("Test Progress (Select an Exam and Measure)");
 
   svg
@@ -134,7 +136,7 @@ function createEmptyScatterPlot() {
     .attr("y", -45)
     .attr("transform", "rotate(-90)")
     .style("text-anchor", "middle")
-    .style("font-size", "25px")
+    .style("font-size", "35px")
     .text("Measure (Select an Exam and Measure)");
 }
 
@@ -179,7 +181,9 @@ function createScatterPlot(measure_name) {
     .select("#chart")
     .append("svg")
     .attr("viewBox", `0 0 ${width} ${height}`)
-    .style("overflow", "visible");
+    .style("overflow", "visible")
+    .style("width", "100%") // Make it stretch within the container
+    .style("height", "auto");
 
   const usableArea = {
     top: margin.top,
