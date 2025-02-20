@@ -88,41 +88,48 @@ function createEmptyScatterPlot() {
     .style("height", "auto");
 
   // Define scales with default ranges
-  xScale = d3.scaleLinear()
+  xScale = d3
+    .scaleLinear()
     .domain([0, 1])
     .range([margin.left, width - margin.right]);
 
-  yScale = d3.scaleLinear()
+  yScale = d3
+    .scaleLinear()
     .domain([0, 1])
     .range([height - margin.bottom, margin.top]);
 
   // Create Axes
-  const xAxis = d3.axisBottom(xScale)
+  const xAxis = d3
+    .axisBottom(xScale)
     .tickValues(d3.range(0, 1.1, 0.1))
-    .tickFormat(d => (d * 100).toFixed(0) + '%');
+    .tickFormat((d) => (d * 100).toFixed(0) + "%");
   const yAxis = d3.axisLeft(yScale);
 
-  svg.append("g")
+  svg
+    .append("g")
     .attr("transform", `translate(0, ${height - margin.bottom})`)
     .call(xAxis)
     .selectAll("text")
     .style("font-size", "25px");
 
-  svg.append("g")
+  svg
+    .append("g")
     .attr("transform", `translate(${margin.left}, 0)`)
     .call(yAxis)
     .selectAll("text")
     .style("font-size", "25px");
 
   // Add Placeholder Titles
-  svg.append("text")
+  svg
+    .append("text")
     .attr("x", width / 2)
     .attr("y", height + 50)
     .style("text-anchor", "middle")
     .style("font-size", "35px")
     .text("Test Progress (Select an Exam and Measure)");
 
-  svg.append("text")
+  svg
+    .append("text")
     .attr("x", -height / 2)
     .attr("y", -50)
     .attr("transform", "rotate(-90)")
@@ -151,7 +158,7 @@ function createScatterPlot(measure_name) {
   );
 
   const minAvgMeasure = Math.min(
-    ...data.map(d => {
+    ...data.map((d) => {
       // Extract available measures
       const measures = [];
 
@@ -185,7 +192,8 @@ function createScatterPlot(measure_name) {
     height: height - margin.top - margin.bottom,
   };
 
-  xScale = d3.scaleLinear()
+  xScale = d3
+    .scaleLinear()
     .domain([0, 1])
     .range([usableArea.left, usableArea.right]);
 
@@ -194,9 +202,10 @@ function createScatterPlot(measure_name) {
     .domain([Math.min(0, minAvgMeasure), maxAvgMeasure])
     .range([usableArea.bottom, usableArea.top]);
 
-  const xAxis = d3.axisBottom(xScale)
+  const xAxis = d3
+    .axisBottom(xScale)
     .tickValues(d3.range(0, 1.1, 0.1))
-    .tickFormat(d => (d * 100).toFixed(0) + '%');
+    .tickFormat((d) => (d * 100).toFixed(0) + "%");
 
   const yAxis = d3.axisLeft(yScale);
 
@@ -231,7 +240,11 @@ function createScatterPlot(measure_name) {
     .style("font-size", "25px");
 
   // Add Y-axis title
-  if (selectedRadio === "bvp" && selectedCheckboxes.length === 1 && selectedCheckboxes.includes("Midterm 1")) {
+  if (
+    selectedRadio === "bvp" &&
+    selectedCheckboxes.length === 1 &&
+    selectedCheckboxes.includes("Midterm 1")
+  ) {
     svg
       .append("text")
       .attr("class", "y-axis-title")
@@ -241,8 +254,7 @@ function createScatterPlot(measure_name) {
       .style("text-anchor", "middle")
       .style("font-size", "35px")
       .text(measure_name);
-  }
-  else {
+  } else {
     svg
       .append("text")
       .attr("class", "y-axis-title")
@@ -264,7 +276,7 @@ function createScatterPlot(measure_name) {
   svg
     .append("g")
     .attr("class", "gridlines")
-    .attr("transform", `translate(0, ${height - margin.bottom})`)  // Align with x-axis
+    .attr("transform", `translate(0, ${height - margin.bottom})`) // Align with x-axis
     .call(
       d3
         .axisBottom(xScale) // X-axis gridlines
@@ -372,7 +384,6 @@ function createScatterPlot(measure_name) {
         .style("font-size", "25px")
         .attr("alignment-baseline", "middle");
 
-
       y += 36;
       numLeg += 1;
       updateTitle(selectedCheckboxes, selectedRadio);
@@ -382,7 +393,7 @@ function createScatterPlot(measure_name) {
   // Event listener for the slider to update the vertical line position
   const slider = document.querySelector("#slider input[type='range']");
   slider.addEventListener("input", (event) => {
-    const value = event.target.value / 89;
+    const value = event.target.value / 90 + 0.01;
     const xPosition = xScale(value);
     verticalLine.attr("x1", xPosition).attr("x2", xPosition);
   });
@@ -450,100 +461,73 @@ function updateTooltipPosition(event) {
 }
 
 document
-    .querySelectorAll('#testFilter input[type="checkbox"]')
-    .forEach((checkbox) => {
-        checkbox.addEventListener("change", () => {
-            // Reset the slider to the start
-            const slider = document.querySelector("#slider input[type='range']");
-            slider.value = slider.min;
+  .querySelectorAll('#testFilter input[type="checkbox"]')
+  .forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      // Reset the slider to the start
+      const slider = document.querySelector("#slider input[type='range']");
+      slider.value = slider.min;
 
-            // Update selected checkboxes
-            selectedCheckboxes = Array.from(
-                document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
-            ).map((checkbox) => checkbox.value);
+      // Update selected checkboxes
+      selectedCheckboxes = Array.from(
+        document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
+      ).map((checkbox) => checkbox.value);
 
-            // Get the selected radio button
-            selectedRadio = document.querySelector(
-                'input[name="measure"]:checked'
-            )?.value;
+      // Get the selected radio button
+      selectedRadio = document.querySelector(
+        'input[name="measure"]:checked'
+      )?.value;
 
-            if (selectedCheckboxes.length === 0) {
-                createEmptyScatterPlot();
-                document.querySelector("#graphTitle").textContent = '';
-                return;
-            }
+      if (selectedCheckboxes.length === 0) {
+        createEmptyScatterPlot();
+        document.querySelector("#graphTitle").textContent = "";
+        return;
+      }
 
-            // Re-load and update the graph whenever a checkbox or radio button is selected
-            if (selectedRadio) {
-                let filePath;
-                let measure_name;
-                if (selectedRadio === "hr") {
-                    filePath = "data/avg_HR.csv";
-                    measure_name = "Average Heart Rate (bpm)";
-                } else if (selectedRadio === "bvp") {
-                    filePath = "data/avg_BVP.csv";
-                    measure_name = "Average Blood Volume Pressure (µV)";
-                } else if (selectedRadio === "temp") {
-                    filePath = "data/avg_TEMP.csv";
-                    measure_name = "Average Skin Surface Temperature (°C)";
-                } else if (selectedRadio === "eda") {
-                    filePath = "data/avg_EDA.csv";
-                    measure_name = "Average Electrodermal Activity (μS)";
-                }
-
-                // Load the data and update the plot
-                loadData(
-                    filePath,
-                    selectedRadio.toUpperCase(),
-                    selectedCheckboxes
-                ).then(() => createScatterPlot(measure_name));
-            }
-
-            selectedExams = selectedCheckboxes.map(checkbox => checkbox.toLowerCase().replace(" ", "_"));
-
-            updateVisualization(+slider.value);
-        });
-    });
-
-// Event listener for radio buttons
-document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
-    radioButton.addEventListener("change", () => {
-        // Reset the slider to the start
-        const slider = document.querySelector("#slider input[type='range']");
-        slider.value = slider.min;
-
-        selectedRadio = document.querySelector('input[name="measure"]:checked')?.value;
-
-        if (selectedRadio && selectedCheckboxes.length > 0) {
-            let filePath;
-            let measure_name;
-            if (selectedRadio === "hr") {
-                filePath = "data/avg_HR.csv";
-                measure_name = "Average Heart Rate (bpm)";
-            } else if (selectedRadio === "bvp") {
-                filePath = "data/avg_BVP.csv";
-                measure_name = "Average Blood Volume Pressure (µV)";
-            } else if (selectedRadio === "temp") {
-                filePath = "data/avg_TEMP.csv";
-                measure_name = "Average Skin Surface Temperature (°C)";
-            } else if (selectedRadio === "eda") {
-                filePath = "data/avg_EDA.csv";
-                measure_name = "Average Electrodermal Activity (μS)";
-            }
-
-            loadData(filePath, selectedRadio.toUpperCase(), selectedCheckboxes)
-                .then(() => createScatterPlot(measure_name));
-        } else {
-            createEmptyScatterPlot(); // Reset to empty plot if nothing is selected
+      // Re-load and update the graph whenever a checkbox or radio button is selected
+      if (selectedRadio) {
+        let filePath;
+        let measure_name;
+        if (selectedRadio === "hr") {
+          filePath = "data/avg_HR.csv";
+          measure_name = "Average Heart Rate (bpm)";
+        } else if (selectedRadio === "bvp") {
+          filePath = "data/avg_BVP.csv";
+          measure_name = "Average Blood Volume Pressure (µV)";
+        } else if (selectedRadio === "temp") {
+          filePath = "data/avg_TEMP.csv";
+          measure_name = "Average Skin Surface Temperature (°C)";
+        } else if (selectedRadio === "eda") {
+          filePath = "data/avg_EDA.csv";
+          measure_name = "Average Electrodermal Activity (μS)";
         }
-    });
-});
 
+        // Load the data and update the plot
+        loadData(
+          filePath,
+          selectedRadio.toUpperCase(),
+          selectedCheckboxes
+        ).then(() => createScatterPlot(measure_name));
+      }
+
+      selectedExams = selectedCheckboxes.map((checkbox) =>
+        checkbox.toLowerCase().replace(" ", "_")
+      );
+
+      updateVisualization(+slider.value);
+    });
+  });
 
 // Event listener for radio buttons
 document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
   radioButton.addEventListener("change", () => {
-    selectedRadio = document.querySelector('input[name="measure"]:checked')?.value;
+    // Reset the slider to the start
+    const slider = document.querySelector("#slider input[type='range']");
+    slider.value = slider.min;
+
+    selectedRadio = document.querySelector(
+      'input[name="measure"]:checked'
+    )?.value;
 
     if (selectedRadio && selectedCheckboxes.length > 0) {
       let filePath;
@@ -562,8 +546,42 @@ document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
         measure_name = "Average Electrodermal Activity (μS)";
       }
 
-      loadData(filePath, selectedRadio.toUpperCase(), selectedCheckboxes)
-        .then(() => createScatterPlot(measure_name));
+      loadData(filePath, selectedRadio.toUpperCase(), selectedCheckboxes).then(
+        () => createScatterPlot(measure_name)
+      );
+    } else {
+      createEmptyScatterPlot(); // Reset to empty plot if nothing is selected
+    }
+  });
+});
+
+// Event listener for radio buttons
+document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
+  radioButton.addEventListener("change", () => {
+    selectedRadio = document.querySelector(
+      'input[name="measure"]:checked'
+    )?.value;
+
+    if (selectedRadio && selectedCheckboxes.length > 0) {
+      let filePath;
+      let measure_name;
+      if (selectedRadio === "hr") {
+        filePath = "data/avg_HR.csv";
+        measure_name = "Average Heart Rate (bpm)";
+      } else if (selectedRadio === "bvp") {
+        filePath = "data/avg_BVP.csv";
+        measure_name = "Average Blood Volume Pressure (µV)";
+      } else if (selectedRadio === "temp") {
+        filePath = "data/avg_TEMP.csv";
+        measure_name = "Average Skin Surface Temperature (°C)";
+      } else if (selectedRadio === "eda") {
+        filePath = "data/avg_EDA.csv";
+        measure_name = "Average Electrodermal Activity (μS)";
+      }
+
+      loadData(filePath, selectedRadio.toUpperCase(), selectedCheckboxes).then(
+        () => createScatterPlot(measure_name)
+      );
     } else {
       createEmptyScatterPlot(); // Reset to empty plot if nothing is selected
     }
@@ -571,18 +589,19 @@ document.querySelectorAll('input[name="measure"]').forEach((radioButton) => {
 });
 
 function updateLegendMarker(overallStress) {
-    const minStress = 0.35; // Match the body's scale
-    const maxStress = 0.65; // Match the body's scale
+  const minStress = 0.35; // Match the body's scale
+  const maxStress = 0.65; // Match the body's scale
 
-    // Ensure the stress level stays within bounds
-    const clampedStress = Math.max(minStress, Math.min(maxStress, overallStress));
+  // Ensure the stress level stays within bounds
+  const clampedStress = Math.max(minStress, Math.min(maxStress, overallStress));
 
-    // Map the stress level to the legend bar width
-    const legendWidth = 300; // Width of the legend gradient
-    const markerPosition = ((clampedStress - minStress) / (maxStress - minStress)) * legendWidth;
+  // Map the stress level to the legend bar width
+  const legendWidth = 300; // Width of the legend gradient
+  const markerPosition =
+    ((clampedStress - minStress) / (maxStress - minStress)) * legendWidth;
 
-    // Update the marker position
-    document.querySelector("#legend-marker").style.left = `${markerPosition}px`;
+  // Update the marker position
+  document.querySelector("#legend-marker").style.left = `${markerPosition}px`;
 }
 
 function getAveragedStress(index) {
@@ -628,68 +647,75 @@ function getAveragedStress(index) {
 }
 
 function updateStatBox(elementId, metric, data, index) {
-    const container = document.getElementById(elementId);
-    container.innerHTML = ""; // Clear previous content
+  const container = document.getElementById(elementId);
+  container.innerHTML = ""; // Clear previous content
 
-    selectedCheckboxes.forEach((exam) => {
-        let value = 0;
+  selectedCheckboxes.forEach((exam) => {
+    let value = 0;
 
-        if (exam === "Midterm 1") {
-            value = Number(data[index]?.[`mt1_avg_${metric}`]) || 0;
-        } else if (exam === "Midterm 2") {
-            value = Number(data[index]?.[`mt2_avg_${metric}`]) || 0;
-        } else if (exam === "Final") {
-            value = Number(data[index]?.[`final_avg_${metric}`]) || 0;
-        }
-
-        // Append only the values that exist
-        if (value !== 0) {
-            const statLine = document.createElement("div");
-            statLine.textContent = `${exam}: ${value.toFixed(2)}`;
-            container.appendChild(statLine);
-        }
-    });
-
-    // If no exams are selected, reset the stat box
-    if (selectedCheckboxes.length === 0) {
-        container.textContent = "-";
+    if (exam === "Midterm 1") {
+      value = Number(data[index]?.[`mt1_avg_${metric}`]) || 0;
+    } else if (exam === "Midterm 2") {
+      value = Number(data[index]?.[`mt2_avg_${metric}`]) || 0;
+    } else if (exam === "Final") {
+      value = Number(data[index]?.[`final_avg_${metric}`]) || 0;
     }
+
+    // Append only the values that exist
+    if (value !== 0) {
+      const statLine = document.createElement("div");
+      statLine.textContent = `${exam}: ${value.toFixed(2)}`;
+      container.appendChild(statLine);
+    }
+  });
+
+  // If no exams are selected, reset the stat box
+  if (selectedCheckboxes.length === 0) {
+    container.textContent = "-";
+  }
 }
 
 function updateVisualization(index) {
-    if (!stressData || stressData.length === 0) {
-        console.warn("Stress data is not available yet.");
-        return;
-    }
+  if (!stressData || stressData.length === 0) {
+    console.warn("Stress data is not available yet.");
+    return;
+  }
 
-    // Get the selected exams dynamically
-    selectedExams = selectedCheckboxes.map((exam) =>
-        exam.toLowerCase().replace(" ", "_")
-    );
+  // Get the selected exams dynamically
+  selectedExams = selectedCheckboxes.map((exam) =>
+    exam.toLowerCase().replace(" ", "_")
+  );
 
-    // Dynamically fetch measure values for selected exams
-    const stressLevels = {
-        hr: getAveragedStress(index),
-        bvp: getAveragedStress(index),
-        temp: getAveragedStress(index),
-        eda: getAveragedStress(index),
-    };
+  // Dynamically fetch measure values for selected exams
+  const stressLevels = {
+    hr: getAveragedStress(index),
+    bvp: getAveragedStress(index),
+    temp: getAveragedStress(index),
+    eda: getAveragedStress(index),
+  };
 
-    console.log(`Updating visualization: Index=${index}`, stressLevels);
+  console.log(`Updating visualization: Index=${index}`, stressLevels);
 
-    // Update stat boxes dynamically
-    updateStatBox("heart-rate-value", "HR", hrData, index);
-    updateStatBox("bvp-value", "BVP", bvpData, index);
-    updateStatBox("temperature-value", "TEMP", tempData, index);
-    updateStatBox("eda-value", "EDA", edaData, index);
+  // Update stat boxes dynamically
+  updateStatBox("heart-rate-value", "HR", hrData, index);
+  updateStatBox("bvp-value", "BVP", bvpData, index);
+  updateStatBox("temperature-value", "TEMP", tempData, index);
+  updateStatBox("eda-value", "EDA", edaData, index);
 
-    // Update overlay color based on overall stress level
-    const overallStress =
-        (stressLevels.hr + stressLevels.bvp + stressLevels.temp + stressLevels.eda) / 4;
-    const colorScale = d3.scaleLinear().domain([0.35, 0.65]).range(["blue", "red"]);
-    const stressColor = colorScale(Math.max(0.4, Math.min(0.6, overallStress))); 
-    document.querySelector(".overlay").style.backgroundColor = stressColor;
-    updateLegendMarker(overallStress);
+  // Update overlay color based on overall stress level
+  const overallStress =
+    (stressLevels.hr +
+      stressLevels.bvp +
+      stressLevels.temp +
+      stressLevels.eda) /
+    4;
+  const colorScale = d3
+    .scaleLinear()
+    .domain([0.35, 0.65])
+    .range(["blue", "red"]);
+  const stressColor = colorScale(Math.max(0.4, Math.min(0.6, overallStress)));
+  document.querySelector(".overlay").style.backgroundColor = stressColor;
+  updateLegendMarker(overallStress);
 }
 
 // Event listeners
@@ -702,24 +728,29 @@ document.addEventListener("DOMContentLoaded", () => {
     updateVisualization(index);
   });
 
-  document.querySelectorAll('#testFilter input[type="checkbox"]').forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      selectedExams = Array.from(
-        document.querySelectorAll('#testFilter input[type="checkbox"]:checked')
-      ).map((cb) => cb.value.toLowerCase().replace(" ", "_"));
+  document
+    .querySelectorAll('#testFilter input[type="checkbox"]')
+    .forEach((checkbox) => {
+      checkbox.addEventListener("change", () => {
+        selectedExams = Array.from(
+          document.querySelectorAll(
+            '#testFilter input[type="checkbox"]:checked'
+          )
+        ).map((cb) => cb.value.toLowerCase().replace(" ", "_"));
 
-      if (selectedExams.length === 0) {
-        selectedExams = [];
-        createEmptyScatterPlot(); // Reset to empty plot if no selection
-      } else {
-        updateVisualization(+document.querySelector("#slider input[type='range']").value);
-      }
+        if (selectedExams.length === 0) {
+          selectedExams = [];
+          createEmptyScatterPlot(); // Reset to empty plot if no selection
+        } else {
+          updateVisualization(
+            +document.querySelector("#slider input[type='range']").value
+          );
+        }
+      });
     });
-  });
 
   loadStressData();
   loadMeasureData();
-
 });
 
 async function updateTitle(tests, measure) {
