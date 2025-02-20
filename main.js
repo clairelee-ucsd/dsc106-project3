@@ -79,16 +79,28 @@ function createEmptyScatterPlot() {
     xScale = d3.scaleLinear()
         .domain([0, 1])
         .range([margin.left, width - margin.right]);
+
     yScale = d3.scaleLinear()
         .domain([0, 1])
         .range([height - margin.bottom, margin.top]);
 
     // Create Axes
-    const xAxis = d3.axisBottom(xScale);
+    const xAxis = d3.axisBottom(xScale)
+        .tickValues(d3.range(0, 1.1, 0.1))
+        .tickFormat(d => (d * 100).toFixed(0) + '%');
     const yAxis = d3.axisLeft(yScale);
 
-    svg.append("g").attr("transform", `translate(0, ${height - margin.bottom})`).call(xAxis).selectAll("text").style("font-size", "18px");
-    svg.append("g").attr("transform", `translate(${margin.left}, 0)`).call(yAxis).selectAll("text").style("font-size", "18px");
+    svg.append("g")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(xAxis)
+        .selectAll("text")
+        .style("font-size", "18px");
+
+    svg.append("g")
+        .attr("transform", `translate(${margin.left}, 0)`)
+        .call(yAxis)
+        .selectAll("text")
+        .style("font-size", "18px");
 
     // Add Placeholder Titles
     svg.append("text")
@@ -171,7 +183,7 @@ function createScatterPlot(measure_name) {
     const xAxis = d3.axisBottom(xScale)
         .tickValues(d3.range(0, 1.1, 0.1))
         .tickFormat(d => (d * 100).toFixed(0) + '%');
-        
+
     const yAxis = d3.axisLeft(yScale);
 
     // Update scales with new ranges
@@ -365,6 +377,11 @@ document
             selectedRadio = document.querySelector(
                 'input[name="measure"]:checked'
             )?.value;
+
+            if (selectedCheckboxes.length === 0) {
+                createEmptyScatterPlot();
+                return;
+            }
 
             // Re-load and update the graph whenever a checkbox or radio button is selected
             if (selectedRadio) {
