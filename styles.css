@@ -371,3 +371,9 @@ body {
     border-radius: 2px;
     transition: left 0.3s ease-in-out;
 }
+
+#writeup{
+    display: flex;
+    margin-top: 5em;
+    justify-content: center;
+}
