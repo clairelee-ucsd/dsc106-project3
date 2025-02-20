@@ -304,6 +304,7 @@ dl.info dd {
 
 #graph-container {
     width: 100%;
-    padding-left: 30%;
+    margin-left: 40%;
+    /* padding-left: 30%; */
     /* height: 800px; */
 }
