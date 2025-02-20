@@ -1,174 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DSC106 Project 3</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
 
-  <body>
-    <h1>
-      How Do Students' Stress Fluctuate Over the Course of Different Exams?
-    </h1>
-    <br />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSC106 Project 3</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>How Do Students' Stress Fluctuate Over the Course of Different Exams?</h1>
+    <br>
     <div id="slider-container">
-      <div id="slider">
-        <label for="sliderStart">Start</label>
-        <div class="slider-wrapper">
-          <span class="slider-text">Test Duration</span>
-          <!-- Static background text -->
-          <input type="range" id="slider" min="0" max="100" value="0" />
+        <div id="slider">
+            <label for="sliderStart">Start</label>
+            <div class="slider-wrapper">
+                <span class="slider-text">Test Duration</span> <!-- Static background text -->
+                <input type="range" id="slider" min="0" max="100" value="0">
+            </div>
+            <label for="sliderEnd">End</label>
         </div>
-        <label for="sliderEnd">End</label>
-      </div>
     </div>
 
-    <div id="content-top">
-      <div id="filter-container">
-        <b>Choose from the Tests Below:</b>
-        <div id="testFilter">
-          <label
-            ><input type="checkbox" name="option1" value="Midterm 1" /> Midterm
-            1</label
-          >
-          <label
-            ><input type="checkbox" name="option2" value="Midterm 2" /> Midterm
-            2</label
-          >
-          <label
-            ><input type="checkbox" name="option3" value="Final" /> Final</label
-          >
+    <div id=content-top>
+        <div id="filter-container">
+            <h3>Choose from the Tests Below:</h3>
+            <div id="testFilter">
+                <label><input type="checkbox" name="option1" value="Midterm 1"> Midterm 1</label>
+                <label><input type="checkbox" name="option2" value="Midterm 2"> Midterm 2</label>
+                <label><input type="checkbox" name="option3" value="Final"> Final</label>
+            </div>
+            <h3>Choose a measure:</h3>
+            <div id="graphRadioButtons">
+                <label><input type="radio" name="measure" value="hr"> Heart Rate (bpm)</label>
+                <label><input type="radio" name="measure" value="bvp"> Blood Volume Pressure (µV)</label>
+                <label><input type="radio" name="measure" value="temp"> Skin Surface Temperature (°C)</label>
+                <label><input type="radio" name="measure" value="eda"> Electrodermal Activity (μS)</label>
+            </div>
         </div>
-        <b>Choose a measure:</b>
-        <div id="graphRadioButtons">
-          <label
-            ><input type="radio" name="measure" value="hr" /> Heart Rate
-            (bpm)</label
-          >
-          <label
-            ><input type="radio" name="measure" value="bvp" /> Blood Volume
-            Pressure (µV)</label
-          >
-          <label
-            ><input type="radio" name="measure" value="temp" /> Skin Surface
-            Temperature (°C)</label
-          >
-          <label
-            ><input type="radio" name="measure" value="eda" /> Electrodermal
-            Activity (μS)</label
-          >
+        <div id=body-stats>
+            <div class="stress-stats-left">
+                <div class="stats-box" id="heart-rate">
+                    <h4>Heart Rate</h4>
+                    <p><span id="heart-rate-value">-</span> bpm</p>
+                </div>
+                <div class="stats-box" id="bvp">
+                    <h4>Blood Volume Pressure</h4>
+                    <p><span id="bvp-value">-</span> µV</p>
+                </div>
+            </div>
+            <div class="body">
+                <h3>Overall Stress Level</h3>
+                <div class="body-container">
+                    <img src="silhouette.png" alt="Silhouette" class="silhouette">
+                    <div class="overlay"></div>
+                </div>
+            </div>
+            <div class="stress-stats-right">
+                <div class="stats-box" id="temperature">
+                    <h4>Skin Surface Temperature</h4>
+                    <p><span id="temperature-value">-</span> °C</p>
+                </div>
+                <div class="stats-box" id="eda">
+                    <h4>Electrodermal Activity</h4>
+                    <p><span id="eda-value">-</span> μS</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div id="body-stats">
-        <div class="stress-stats-left">
-          <div class="stats-box" id="heart-rate">
-            <h4>Heart Rate</h4>
-            <p><span id="heart-rate-value">-</span> bpm</p>
-          </div>
-          <div class="stats-box" id="bvp">
-            <h4>Blood Volume Pressure</h4>
-            <p><span id="bvp-value">-</span> µV</p>
-          </div>
-        </div>
-        <div class="body">
-          <h3>Overall Stress Level</h3>
-          <div class="body-container">
-            <img src="silhouette.png" alt="Silhouette" class="silhouette" />
-            <div class="overlay"></div>
-          </div>
-        </div>
-        <div class="stress-stats-right">
-          <div class="stats-box" id="temperature">
-            <h4>Skin Surface Temperature</h4>
-            <p><span id="temperature-value">-</span> °C</p>
-          </div>
-          <div class="stats-box" id="eda">
-            <h4>Electrodermal Activity</h4>
-            <p><span id="eda-value">-</span> μS</p>
-          </div>
-        </div>
-      </div>
     </div>
     <div id="content-bottom">
-      <div id="graph-container">
-        <h3>Plotted Comparisons</h3>
-        <h4 id="graphTitle"></h4>
-        <div id="graphs">
-          <!-- graphs will be placed here -->
+        <div id="graph-container">
+            <div id="placeholder"></div>
+            <div id="graphs">
+                <h3>Plotted Comparisons</h3>
+                <h4 id="graphTitle"></h4>
+                <!-- graphs will be placed here -->
+            </div>
+
+            <div id="chart"></div>
+
+            <dl id="tooltip" class="info tooltip" hidden>
+                <dt>Test Progress</dt>
+                <dd id="test_progress"></dd>
+
+                <dt id="measurement_name"></dt>
+                <dd id="measurement_value"></dd>
+            </dl>
         </div>
-
-<<<<<<< HEAD
-        <div id="chart"></div>
-=======
-        <div id=content-top>
-            <div id="filter-dummy">
-
-            </div>
-            <div id="filter-container">
-                <h3>Choose from the Tests Below:</h3>
-                <div id="testFilter">
-                    <label><input type="checkbox" name="option1" value="Midterm 1"> Midterm 1</label>
-                    <label><input type="checkbox" name="option2" value="Midterm 2"> Midterm 2</label>
-                    <label><input type="checkbox" name="option3" value="Final"> Final</label>
-                </div>
-                <h3>Choose a measure:</h3>
-                <div id="graphRadioButtons">
-                    <label><input type="radio" name="measure" value="hr"> Heart Rate (bpm)</label>
-                    <label><input type="radio" name="measure" value="bvp"> Blood Volume Pressure (µV)</label>
-                    <label><input type="radio" name="measure" value="temp"> Skin Surface Temperature (°C)</label>
-                    <label><input type="radio" name="measure" value="eda"> Electrodermal Activity (μS)</label>
-                </div>
-            </div>
-            <div id=body-stats>
-                <div class="stress-stats-left">
-                    <div class="stats-box" id="heart-rate">
-                        <h4>Heart Rate</h4>
-                        <p><span id="heart-rate-value">-</span> bpm</p>
-                    </div>
-                    <div class="stats-box" id="bvp">
-                        <h4>Blood Volume Pressure</h4>
-                        <p><span id="bvp-value">-</span> µV</p>
-                    </div>
-                </div>
-                <div class="body">
-                    <h3>Overall Stress Level</h3>
-                    <div class="body-container">
-                        <img src="silhouette.png" alt="Silhouette" class="silhouette">
-                        <div class="overlay"></div>
-                    </div>
-                </div>
-                <div class="stress-stats-right">
-                    <div class="stats-box" id="temperature">
-                        <h4>Skin Surface Temperature</h4>
-                        <p><span id="temperature-value">-</span> °C</p>
-                    </div>
-                    <div class="stats-box" id="eda">
-                        <h4>Electrodermal Activity</h4>
-                        <p><span id="eda-value">-</span> μS</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="content-bottom">
-            <div id="graph-container">
-                <div id="graphs">
-                    <h3>Plotted Comparisons</h3>
-                    <h4 id="graphTitle"></h4>
-                    <!-- graphs will be placed here -->
-                </div>
->>>>>>> d30326687ae310a45b7899ec170cc010db20f850
-
-        <dl id="tooltip" class="info tooltip" hidden>
-          <dt>Test Progress</dt>
-          <dd id="test_progress"></dd>
-          <dt id="measurement_name"></dt>
-          <dd id="measurement_value"></dd>
-        </dl>
-      </div>
     </div>
 
     <script src="main.js" type="module"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-  </body>
+</body>
+
 </html>
