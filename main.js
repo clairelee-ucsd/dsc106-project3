@@ -79,13 +79,15 @@ function createEmptyScatterPlot() {
     xScale = d3.scaleLinear()
         .domain([0, 1])
         .range([margin.left, width - margin.right]);
-        
+
     yScale = d3.scaleLinear()
         .domain([0, 1])
         .range([height - margin.bottom, margin.top]);
 
     // Create Axes
-    const xAxis = d3.axisBottom(xScale);
+    const xAxis = d3.axisBottom(xScale)
+        .tickValues(d3.range(0, 1.1, 0.1))
+        .tickFormat(d => (d * 100).toFixed(0) + '%');
     const yAxis = d3.axisLeft(yScale);
 
     svg.append("g")
@@ -181,7 +183,7 @@ function createScatterPlot(measure_name) {
     const xAxis = d3.axisBottom(xScale)
         .tickValues(d3.range(0, 1.1, 0.1))
         .tickFormat(d => (d * 100).toFixed(0) + '%');
-        
+
     const yAxis = d3.axisLeft(yScale);
 
     // Update scales with new ranges
