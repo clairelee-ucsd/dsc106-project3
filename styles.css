@@ -35,6 +35,17 @@ html {
     margin-left: 1em;
 }
 
+#instructions{
+    h3{
+        margin-bottom: 0;
+    }
+}
+#details{
+    font-size: 80%;
+    color: gray;
+    margin: 0;
+}
+
 /* Checkbox container */
 #testFilter {
     display: flex;
@@ -306,6 +317,7 @@ dl.info dd {
 #graph-container {
     width: 100%;
     margin-left: 40%;
+    z-index: 3;
 }
 
 body {
