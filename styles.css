@@ -170,7 +170,7 @@ input[type="range"]::-webkit-slider-thumb {
     justify-content: space-between;
     padding: 10px;
     width: 80%;
-    margin-top: 1em;
+    margin-top: 5em;
 }
 
 /* Plot Style */
