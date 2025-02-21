@@ -317,7 +317,7 @@ dl.info dd {
 
 #graph-container {
     width: 100%;
-    margin-left: 40%;
+    margin-left: 50%;
     z-index: 3;
 }
 
@@ -344,6 +344,7 @@ body {
     width: 100%;
     position: relative; /* Ensure it stays below */
     flex-direction: row;
+    margin-left: 8em;
 }
 
 .legend-container {
