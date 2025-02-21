@@ -10,7 +10,7 @@
     <h1>Write Up</h1>
     <p>
       The motivation for this project is to visualize how students' stress
-      changes over the duration of an exam, and how different stressor vary
+      changes over the duration of an exam, and how different stress indicators vary
       throughout different exams. As students ourselves, we resonated with this
       data, and think instructors can benefit as well through understanding
       student perspectives. Because there are many different aspects to this,
@@ -27,12 +27,33 @@
       our goal is to visualize how stressors change over time.
     </p>
     <p>
-      Some alternative we considered were using a different dataset (such as one
-      that was previously used from the last project, such as the mouse
+      Some alternatives we considered were using a different dataset (such as the mouse
       dataset). We also considered using the data to predict students' scores,
       and originally wanted our project to involve each students' final scores.
-      However, we decided to aggregate all the information together so we can
-      see common trends.
+      However, too much information may overwhelm the audience and so we decided to just 
+      focus on when students are most stressed in the duration of exams, rather than to 
+      correlate stress with scores.
+    </p>
+    <p>
+      To explore the question, we decided to make use of a human body, representing
+      a student, and applied a color-scheme to represent stress level where blue is
+      low stress and red is high stress. Since we are using a continuos color scale, 
+      we decided to add a color legend with a pointer so our audience can easily see
+      whether stress levels are increasing or decreasing (since it may be harder to 
+      identify with the color chnage) as they move the slider. We also chose to include
+      filters on exams and stress indicators since the stress trend may vary for
+      different exams. For example, if you play around with our interactive visualization,
+      you may find students more stressed in the earlier stages of midterm 1 while 
+      for midterm 2, students' stress level increase past the half point of the test.
+      We want to account for these differences which would be lost if we were to just
+      aggregate all 3 test measurements. For the filter on stress indicators, we wanted
+      to allow the audience to easily see the trends of each measure for the selected test(s)
+      chosen. It allows for easier compare and contrast because the colored dots on the graph
+      indicates the measurement of a stress indicator for a specific exam and if all 3 tests
+      are chosen, 3 plots would be shown in the graph, allowing for direct comparison in 
+      one glance. We also included a red line to track the slidebar's position in the graph 
+      so the audience can immediately see the measurements at the time of the test that they
+      chose with the slidebar.
     </p>
     <p>
       Our development process was lengthy. Originally, our dataset contained
